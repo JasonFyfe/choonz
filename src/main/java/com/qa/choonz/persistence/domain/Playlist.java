@@ -27,12 +27,12 @@ public class Playlist {
 
     @NotNull
     @Size(max = 500)
-    @Column(unique = true)
+//    @Column(unique = true)
     private String description;
 
     @NotNull
     @Size(max = 1000)
-    @Column(unique = true)
+//    @Column(unique = true)
     private String artwork;
 
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
@@ -40,17 +40,15 @@ public class Playlist {
 
     public Playlist() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public Playlist(long id, @NotNull @Size(max = 100) String name, @NotNull @Size(max = 500) String description,
-            @NotNull @Size(max = 1000) String artwork, List<Track> tracks) {
+            @NotNull @Size(max = 1000) String artwork) {
         super();
         this.id = id;
         this.name = name;
         this.description = description;
         this.artwork = artwork;
-        this.tracks = tracks;
     }
 
     public long getId() {
