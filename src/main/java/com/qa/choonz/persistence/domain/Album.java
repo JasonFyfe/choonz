@@ -39,17 +39,12 @@ public class Album {
 
     public Album() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-    public Album(long id, @NotNull @Size(max = 100) String name, List<Track> tracks, Artist artist, Genre genre,
-            String cover) {
+    public Album(long id, @NotNull @Size(max = 100) String name, String cover) {
         super();
         this.id = id;
         this.name = name;
-        this.tracks = tracks;
-        this.artist = artist;
-        this.genre = genre;
         this.cover = cover;
     }
 
