@@ -22,12 +22,12 @@ import com.qa.choonz.service.AlbumService;
 @CrossOrigin
 public class AlbumController {
 
-//    private AlbumService service;
-//
-//    public AlbumController(AlbumService service) {
-//        super();
-//        this.service = service;
-//    }
+    private AlbumService service;
+
+    public AlbumController(AlbumService service) {
+        super();
+        this.service = service;
+    }
 //
 //    @PostMapping("/create")
 //    public ResponseEntity<AlbumDTO> create(@RequestBody Album album) {
