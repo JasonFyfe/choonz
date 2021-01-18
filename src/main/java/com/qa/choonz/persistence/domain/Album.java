@@ -37,6 +37,12 @@ public class Album {
     public Album() {
         super();
     }
+    
+    public Album(@NotNull @Size(max = 100) String name, String cover) {
+        super();
+        this.name = name;
+        this.cover = cover;
+    }
 
     public Album(long id, @NotNull @Size(max = 100) String name, String cover) {
         super();
