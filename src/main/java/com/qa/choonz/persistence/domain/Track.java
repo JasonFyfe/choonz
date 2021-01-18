@@ -123,9 +123,7 @@ public class Track {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Track))
 			return false;
 		Track other = (Track) obj;
 		return Objects.equals(album, other.album) && duration == other.duration && Objects.equals(genre, other.genre)
