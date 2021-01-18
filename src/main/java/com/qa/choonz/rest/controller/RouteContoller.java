@@ -15,7 +15,7 @@ public class RouteContoller {
         return "index.html";
     }
 
-    @GetMapping(value = "/tracks")
+    @GetMapping(value = "/track")
     public String tracks() {
         return "tracks.html";
     }
