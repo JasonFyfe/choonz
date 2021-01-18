@@ -28,6 +28,9 @@ public class Track {
 
     @ManyToOne
     private Playlist playlist;
+    
+    @ManyToOne
+    private Genre genre;
 
     // in seconds
     private int duration;
@@ -77,8 +80,16 @@ public class Track {
     public void setPlaylist(Playlist playlist) {
         this.playlist = playlist;
     }
+    
+    public Genre getGenre() {
+		return genre;
+	}
 
-    public int getDuration() {
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
+
+	public int getDuration() {
         return duration;
     }
 
@@ -95,31 +106,31 @@ public class Track {
     }
 
     @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Track [id=").append(id).append(", name=").append(name).append(", album=").append(album)
-                .append(", playlist=").append(playlist).append(", duration=").append(duration).append(", lyrics=")
-                .append(lyrics).append("]");
-        return builder.toString();
-    }
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Track [id=").append(id).append(", name=").append(name).append(", album=").append(album)
+				.append(", playlist=").append(playlist).append(", genre=").append(genre).append(", duration=")
+				.append(duration).append(", lyrics=").append(lyrics).append("]");
+		return builder.toString();
+	}
 
     @Override
-    public int hashCode() {
-        return Objects.hash(album, duration, id, lyrics, name, playlist);
-    }
+	public int hashCode() {
+		return Objects.hash(album, duration, genre, id, lyrics, name, playlist);
+	}
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Track)) {
-            return false;
-        }
-        Track other = (Track) obj;
-        return Objects.equals(album, other.album) && duration == other.duration && id == other.id
-                && Objects.equals(lyrics, other.lyrics) && Objects.equals(name, other.name)
-                && Objects.equals(playlist, other.playlist);
-    }
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Track other = (Track) obj;
+		return Objects.equals(album, other.album) && duration == other.duration && Objects.equals(genre, other.genre)
+				&& id == other.id && Objects.equals(lyrics, other.lyrics) && Objects.equals(name, other.name)
+				&& Objects.equals(playlist, other.playlist);
+	}
 
 }
