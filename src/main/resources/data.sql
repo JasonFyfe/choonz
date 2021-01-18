@@ -1,4 +1,4 @@
-INSERT INTO `genre` (`id`, `name`, `description`) VALUES(1, 'Indie Folk', 'whiny-voiced white sadboi music');
+/* INSERT INTO `genre` (`id`, `name`, `description`) VALUES(1, 'Indie Folk', 'whiny-voiced white sadboi music');
 INSERT INTO `genre` (`id`, `name`, `description`) VALUES(2, 'Indie Rock and Roll', 'straight bangers from your youth');
 
 INSERT INTO `playlist`(`id`, `name`, `description`, `artwork`) VALUES(1, 'Sadbois', 'whiny musics', 'some url');
@@ -20,4 +20,4 @@ INSERT INTO `track` (`id`, `title`, `artist_id`, `album_id`, `duration`, `lyrics
 INSERT INTO `track` (`id`, `title`, `artist_id`, `album_id`, `duration`, `lyrics`, `genre_id`, `playlist_id`) VALUES (4, 'Broom People', 1, 4, 360, '36 Hudson in the garage...', 1, 1);
 INSERT INTO `track` (`id`, `title`, `artist_id`, `album_id`, `duration`, `lyrics`, `genre_id`, `playlist_id`) VALUES (5, 'This Is My House, This Is My Home', 2, 5, 545, 'Woke when it was dark...', 2, 2);
 
-COMMIT;
+COMMIT; */
