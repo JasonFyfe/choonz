@@ -1,5 +1,7 @@
 package com.qa.choonz.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,16 +17,20 @@ public class UserService implements UserDetailsService {
 
     private UserRepository repo;
     private PasswordEncoder encoder;
+    private TenantService tenantService;
 
     public UserService(UserRepository repository) {
         this.repo = repository;
         this.encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
+    
+    @Transactional
     public User createUser(User user) {
         String encodedPassword = encoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        return repo.save(user);
+        User saved = repo.save(user);
+        tenantService.initDatabase(user.getUsername());
+        return saved;
     }
 
     @Override
@@ -32,4 +38,5 @@ public class UserService implements UserDetailsService {
         return repo.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with the specified username is not found"));
     }
+  
 }
