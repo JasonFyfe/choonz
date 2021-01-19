@@ -3,23 +3,11 @@ package com.qa.choonz.config;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import com.qa.choonz.persistence.domain.Artist;
-import com.qa.choonz.persistence.domain.Album;
-import com.qa.choonz.persistence.domain.Track;
-import com.qa.choonz.persistence.domain.Genre;
-import com.qa.choonz.persistence.domain.Playlist;
-import com.qa.choonz.persistence.repository.AlbumRepository;
-import com.qa.choonz.persistence.repository.ArtistRepository;
-import com.qa.choonz.persistence.repository.TrackRepository;
-import com.qa.choonz.persistence.repository.GenreRepository;
-import com.qa.choonz.persistence.repository.PlaylistRepository;
 
 @Configuration
 public class AppConfig {
