@@ -50,6 +50,23 @@ public class Album {
         this.name = name;
         this.cover = cover;
     }
+    
+    public Album(long id, @NotNull @Size(max = 100) String name, String cover, List<Track> tracks) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.cover = cover;
+        this.tracks = tracks;
+    }
+    
+    public Album(long id, @NotNull @Size(max = 100) String name, String cover, Artist artist, List<Track> tracks) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.cover = cover;
+        this.artist = artist;
+        this.tracks = tracks;
+    }
 
     public long getId() {
         return id;
