@@ -16,6 +16,8 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
+import com.qa.choonz.ChoonzApplication;
+
 @Configuration
 public class HibernateConfig {
 
@@ -30,7 +32,7 @@ public class HibernateConfig {
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan(MultiTenancyApplication.class.getPackage().getName());
+        em.setPackagesToScan(ChoonzApplication.class.getPackage().getName());
         em.setJpaVendorAdapter(jpaVendorAdapter());
 
         Map<String, Object> jpaPropertiesMap = new HashMap<>(jpaProperties.getProperties());
