@@ -55,4 +55,5 @@ public class GenreController {
         return this.service.delete(id) ? new ResponseEntity<GenreDTO>(HttpStatus.NO_CONTENT)
                 : new ResponseEntity<GenreDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }
