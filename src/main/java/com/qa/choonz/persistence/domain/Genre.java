@@ -50,6 +50,14 @@ public class Genre {
         this.description = description;
     }
     
+    public Genre(long id, @NotNull @Size(max = 100) String name, @NotNull @Size(max = 250) String description, List<Track> tracks) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.tracks = tracks;
+    }
+    
     public long getId() {
 		return id;
 	}
