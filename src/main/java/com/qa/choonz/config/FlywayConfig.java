@@ -6,9 +6,11 @@ import org.flywaydb.core.Flyway;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import com.qa.choonz.persistence.repository.UserRepository;
 
+@Profile({"devsecure", "prod"})
 @Configuration
 public class FlywayConfig {
 

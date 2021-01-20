@@ -16,12 +16,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.rest.controller.PlaylistController;
 import com.qa.choonz.rest.dto.PlaylistDTO;
 import com.qa.choonz.service.PlaylistService;
 
-@SpringBootTest
+@SingleTenantTest
 public class PlaylistControllerUnitTest {
 
 	@Autowired

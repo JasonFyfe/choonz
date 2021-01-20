@@ -6,8 +6,10 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+@Profile({"devsecure", "prod"})
 @Component
 public class TenantConnectionProvider implements MultiTenantConnectionProvider {
 

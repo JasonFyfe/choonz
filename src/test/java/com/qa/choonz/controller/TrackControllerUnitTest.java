@@ -16,12 +16,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.rest.controller.TrackController;
 import com.qa.choonz.rest.dto.TrackDTO;
 import com.qa.choonz.service.TrackService;
 
-@SpringBootTest
+@SingleTenantTest
 public class TrackControllerUnitTest {
 
 	@Autowired

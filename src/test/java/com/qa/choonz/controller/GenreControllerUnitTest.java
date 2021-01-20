@@ -16,12 +16,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.Genre;
 import com.qa.choonz.rest.controller.GenreController;
 import com.qa.choonz.rest.dto.GenreDTO;
 import com.qa.choonz.service.GenreService;
 
-@SpringBootTest
+@SingleTenantTest
 public class GenreControllerUnitTest {
 
 	@Autowired

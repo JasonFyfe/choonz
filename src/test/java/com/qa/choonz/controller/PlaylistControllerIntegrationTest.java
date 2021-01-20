@@ -23,11 +23,13 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qa.choonz.config.SingleTenantTest;
+import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.rest.dto.PlaylistDTO;
 
-@SpringBootTest
+@SingleTenantTest
 @AutoConfigureMockMvc
 class PlaylistControllerIntegrationTest {
 	@Autowired
