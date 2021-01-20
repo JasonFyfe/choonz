@@ -1,19 +1,20 @@
 package com.qa.choonz.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
+import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.Album;
 import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.persistence.domain.Track;
 
-@SpringBootTest
+@SingleTenantTest
 public class AlbumUnitTest {
 
 	private Artist artist;

@@ -1,9 +1,10 @@
 package com.qa.choonz;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import com.qa.choonz.config.SingleTenantTest;
+
+@SingleTenantTest
 public class ChoonzTests {
 	
 	@Test

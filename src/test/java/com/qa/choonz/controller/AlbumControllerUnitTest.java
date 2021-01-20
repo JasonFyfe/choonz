@@ -11,17 +11,17 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.Album;
 import com.qa.choonz.rest.controller.AlbumController;
 import com.qa.choonz.rest.dto.AlbumDTO;
 import com.qa.choonz.service.AlbumService;
 
-@SpringBootTest
+@SingleTenantTest
 public class AlbumControllerUnitTest {
 
 	@Autowired
