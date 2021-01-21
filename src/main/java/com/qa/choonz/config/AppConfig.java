@@ -42,6 +42,7 @@ public class AppConfig {
         };
     }
     
+
     @Bean
     CommandLineRunner initDatabase(ArtistRepository artistRepo,
     							   AlbumRepository albumRepo,
