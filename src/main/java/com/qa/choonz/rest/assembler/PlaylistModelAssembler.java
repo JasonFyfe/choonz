@@ -33,15 +33,19 @@ public class PlaylistModelAssembler extends RepresentationModelAssemblerSupport<
 		
 		playlistModel.setId(entity.getId());
 		playlistModel.setName(entity.getName());
+		playlistModel.setDescription(entity.getDescription());
+		playlistModel.setArtwork(entity.getArtwork());
+		playlistModel.setTracks(entity.getTracks());
+
 		return playlistModel;
 	}
-	
+
 	@Override
-    public CollectionModel<PlaylistModel> toCollectionModel(Iterable<? extends Playlist> entities) 
-    {
-        CollectionModel<PlaylistModel> artistModels = super.toCollectionModel(entities);
-        artistModels.add(linkTo(methodOn(PlaylistController.class).findAll()).withSelfRel());
-         
-        return artistModels;
-    }
+	public CollectionModel<PlaylistModel> toCollectionModel(Iterable<? extends Playlist> entities) {
+		CollectionModel<PlaylistModel> playlistModels = super.toCollectionModel(entities);
+		playlistModels.add(linkTo(methodOn(PlaylistController.class).findAll()).withSelfRel());
+
+		return playlistModels;
+	}
 }
+
