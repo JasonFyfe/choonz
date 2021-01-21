@@ -60,12 +60,12 @@ public class AppConfig {
     		log.info("Preloading " + albumRepo.save(new Album(3L, "In League With Dragons", "some other other url", null, null)));
     		log.info("Preloading " + albumRepo.save(new Album(4L, "The Sunset Tree", "and another", null, null)));
     		log.info("Preloading " + albumRepo.save(new Album(5L, "These Four Walls", "and again!", null, null)));
-    		// Tracks
-    		log.info("Preloading " + trackRepo.save(new Track("Cotton", 360, "This song is for the rats...")));
-    		log.info("Preloading " + trackRepo.save(new Track("Oceanographers Choice", 400, "WELL...")));
-    		log.info("Preloading " + trackRepo.save(new Track("Younger", 500, "Crank that siren high...")));
-    		log.info("Preloading " + trackRepo.save(new Track("Broom People", 360, "36 Hudson in the garage...")));
-    		log.info("Preloading " + trackRepo.save(new Track("This Is My House, This Is My Home", 545, "Woke when it was dark...")));
+    		// Tracks id, name, playlist, genre, duration, lyrics
+    		log.info("Preloading " + trackRepo.save(new Track(1L, "Cotton", null, null, null, 360, "This song is for the rats...")));
+    		log.info("Preloading " + trackRepo.save(new Track(2L, "Oceanographers Choice", null, null, null, 400, "WELL...")));
+    		log.info("Preloading " + trackRepo.save(new Track(3L, "Younger", null, null, null, 500, "Crank that siren high...")));
+    		log.info("Preloading " + trackRepo.save(new Track(4L, "Broom People", null, null, null, 360, "36 Hudson in the garage...")));
+    		log.info("Preloading " + trackRepo.save(new Track(5L, "This Is My House, This Is My Home", null, null, null, 545, "Woke when it was dark...")));
     		// Genres
     		log.info("Preloading " + genreRepo.save(new Genre(1L, "Indie Folk", "whiny-voiced white sadboi music", null)));
     		log.info("Preloading " + genreRepo.save(new Genre(2L, "Indie Rock and Roll", "straight bangers from your youth", null)));
