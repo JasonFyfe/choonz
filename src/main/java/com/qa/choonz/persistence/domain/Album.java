@@ -1,7 +1,8 @@
 package com.qa.choonz.persistence.domain;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,8 +15,22 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString(exclude = {"artist", "tracks"})
 @Entity
-public class Album {
+public class Album implements Serializable{
+
+	@Serial
+	private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +40,8 @@ public class Album {
     @Size(max = 100)
     @Column(unique = true)
     private String name;
+    
+    private String cover;
 
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private List<Track> tracks;
@@ -32,104 +49,5 @@ public class Album {
     @ManyToOne
     private Artist artist;
 
-    private String cover;
-
-    public Album() {
-        super();
-    }
     
-    public Album(@NotNull @Size(max = 100) String name, String cover) {
-        super();
-        this.name = name;
-        this.cover = cover;
-    }
-
-    public Album(long id, @NotNull @Size(max = 100) String name, String cover) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.cover = cover;
-    }
-    
-    public Album(long id, @NotNull @Size(max = 100) String name, String cover, List<Track> tracks) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.cover = cover;
-        this.tracks = tracks;
-    }
-    
-    public Album(long id, @NotNull @Size(max = 100) String name, String cover, Artist artist, List<Track> tracks) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.cover = cover;
-        this.artist = artist;
-        this.tracks = tracks;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Track> getTracks() {
-        return tracks;
-    }
-
-    public void setTracks(List<Track> tracks) {
-        this.tracks = tracks;
-    }
-
-    public Artist getArtist() {
-        return artist;
-    }
-
-    public void setArtist(Artist artist) {
-        this.artist = artist;
-    }
-
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
-    @Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Album [id=").append(id).append(", name=").append(name).append(", tracks=").append(tracks)
-				.append(", artist=").append(artist).append(", cover=").append(cover).append("]");
-		return builder.toString();
-	}
-
-    @Override
-	public int hashCode() {
-		return Objects.hash(artist, cover, id, name, tracks);
-	}
-
-    @Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof Album))
-			return false;
-		Album other = (Album) obj;
-		return Objects.equals(artist, other.artist) && Objects.equals(cover, other.cover) && id == other.id
-				&& Objects.equals(name, other.name) && Objects.equals(tracks, other.tracks);
-	}
-
 }

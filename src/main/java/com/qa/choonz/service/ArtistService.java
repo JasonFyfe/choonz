@@ -1,52 +1,56 @@
 package com.qa.choonz.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.ArtistNotFoundException;
 import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.persistence.repository.ArtistRepository;
-import com.qa.choonz.rest.dto.ArtistDTO;
+import com.qa.choonz.rest.assembler.ArtistModelAssembler;
+import com.qa.choonz.rest.model.ArtistModel;
 
 @Service
 public class ArtistService {
 
+	@Autowired
     private ArtistRepository repo;
-    private ModelMapper mapper;
+	
+	@Autowired
+	private ArtistModelAssembler artistModelAssembler;
 
-    public ArtistService(ArtistRepository repo, ModelMapper mapper) {
+    public ArtistService() {
         super();
-        this.repo = repo;
-        this.mapper = mapper;
     }
 
-    private ArtistDTO mapToDTO(Artist artist) {
-        return this.mapper.map(artist, ArtistDTO.class);
+    // TODO Implement exception
+    public ArtistModel create(Artist artist) {
+    	Artist entity = this.repo.save(artist);
+    	ArtistModel model = artistModelAssembler.toModel(entity);
+        return model;
     }
-
-    public ArtistDTO create(Artist artist) {
-        Artist created = this.repo.save(artist);
-        return this.mapToDTO(created);
+    
+    // TODO Implement exception
+    public CollectionModel<ArtistModel> findAll() {
+    	List<Artist> entities = this.repo.findAll();
+    	CollectionModel<ArtistModel> models = artistModelAssembler.toCollectionModel(entities);
+    	return models;
     }
-
-    public List<ArtistDTO> read() {
-        return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+    
+    // TODO Implement exception
+    public ArtistModel findById(long id) {
+    	Artist entity = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
+    	ArtistModel model = artistModelAssembler.toModel(entity);
+        return model;
     }
-
-    public ArtistDTO read(long id) {
-        Artist found = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
-        return this.mapToDTO(found);
-    }
-
-    public ArtistDTO update(Artist artist, long id) {
-        Artist toUpdate = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
-        toUpdate.setName(artist.getName());
-        toUpdate.setAlbums(artist.getAlbums());
-        Artist updated = this.repo.save(toUpdate);
-        return this.mapToDTO(updated);
+    
+    public ArtistModel update(Artist artist, long id) {
+        Artist entity = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
+        entity.setName(artist.getName());
+        ArtistModel model = artistModelAssembler.toModel(this.repo.save(entity));
+        return model;
     }
 
     public boolean delete(long id) {

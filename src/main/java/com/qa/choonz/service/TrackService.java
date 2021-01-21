@@ -1,55 +1,49 @@
 package com.qa.choonz.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.TrackNotFoundException;
 import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.persistence.repository.TrackRepository;
-import com.qa.choonz.rest.dto.TrackDTO;
+import com.qa.choonz.rest.assembler.TrackModelAssembler;
+import com.qa.choonz.rest.model.TrackModel;
 
 @Service
 public class TrackService {
 
+	@Autowired
     private TrackRepository repo;
-    private ModelMapper mapper;
+	
+	@Autowired
+	private TrackModelAssembler trackModelAssembler;
 
-    public TrackService(TrackRepository repo, ModelMapper mapper) {
+    public TrackService() {
         super();
-        this.repo = repo;
-        this.mapper = mapper;
+    }
+    
+    public TrackModel create(Track track) {
+    	return this.trackModelAssembler.toModel(this.repo.save(track));
     }
 
-    private TrackDTO mapToDTO(Track track) {
-        return this.mapper.map(track, TrackDTO.class);
+    public CollectionModel<TrackModel> findAll() {
+        return this.trackModelAssembler.toCollectionModel(this.repo.findAll());
     }
 
-    public TrackDTO create(Track track) {
-        Track created = this.repo.save(track);
-        return this.mapToDTO(created);
+    public TrackModel findById(long id) {
+    	return this.trackModelAssembler.toModel(this.repo.findById(id).orElseThrow(TrackNotFoundException::new));
     }
 
-    public List<TrackDTO> read() {
-        return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
-    }
-
-    public TrackDTO read(long id) {
-        Track found = this.repo.findById(id).orElseThrow(TrackNotFoundException::new);
-        return this.mapToDTO(found);
-    }
-
-    public TrackDTO update(Track track, long id) {
-        Track toUpdate = this.repo.findById(id).orElseThrow(TrackNotFoundException::new);
-        toUpdate.setName(track.getName());
-        toUpdate.setAlbum(track.getAlbum());
-        toUpdate.setDuration(track.getDuration());
-        toUpdate.setLyrics(track.getLyrics());
-        toUpdate.setPlaylist(track.getPlaylist());
-        Track updated = this.repo.save(toUpdate);
-        return this.mapToDTO(updated);
+    public TrackModel update(Track track, long id) {
+        Track entity = this.repo.findById(id).orElseThrow(TrackNotFoundException::new);
+        entity.setName(track.getName());
+        entity.setAlbum(track.getAlbum());
+        entity.setDuration(track.getDuration());
+        entity.setLyrics(track.getLyrics());
+        entity.setPlaylist(track.getPlaylist());
+        entity.setGenre(track.getGenre());
+        return this.trackModelAssembler.toModel(this.repo.save(entity));
     }
 
     public boolean delete(long id) {

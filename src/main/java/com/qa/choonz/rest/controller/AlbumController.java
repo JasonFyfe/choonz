@@ -1,7 +1,7 @@
 package com.qa.choonz.rest.controller;
 
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qa.choonz.persistence.domain.Album;
-import com.qa.choonz.rest.dto.AlbumDTO;
+import com.qa.choonz.rest.model.AlbumModel;
 import com.qa.choonz.service.AlbumService;
 
 @RestController
@@ -23,37 +23,38 @@ import com.qa.choonz.service.AlbumService;
 @CrossOrigin
 public class AlbumController {
 
+	@Autowired
     private AlbumService service;
 
-    public AlbumController(AlbumService service) {
+    public AlbumController() {
         super();
-        this.service = service;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<AlbumDTO> create(@RequestBody Album album) {
-        return new ResponseEntity<AlbumDTO>(this.service.create(album), HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<AlbumModel> create(@RequestBody Album album) {
+        return new ResponseEntity<AlbumModel>(this.service.create(album), HttpStatus.CREATED);
     }
 
-    @GetMapping("/read")
-    public ResponseEntity<List<AlbumDTO>> read() {
-        return new ResponseEntity<List<AlbumDTO>>(this.service.read(), HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<CollectionModel<AlbumModel>> findAll() {
+        return new ResponseEntity<CollectionModel<AlbumModel>>(this.service.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/read/{id}")
-    public ResponseEntity<AlbumDTO> read(@PathVariable long id) {
-        return new ResponseEntity<AlbumDTO>(this.service.read(id), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<AlbumModel> findById(@PathVariable long id) {
+        return new ResponseEntity<AlbumModel>(this.service.findById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<AlbumDTO> update(@RequestBody Album album, @PathVariable long id) {
-        return new ResponseEntity<AlbumDTO>(this.service.update(album, id), HttpStatus.ACCEPTED);
+    @PutMapping("/{id}")
+    public ResponseEntity<AlbumModel> update(@RequestBody Album album, @PathVariable long id) {
+        return new ResponseEntity<AlbumModel>(this.service.update(album, id), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<AlbumDTO> delete(@PathVariable long id) {
-        return this.service.delete(id) ? new ResponseEntity<AlbumDTO>(HttpStatus.NO_CONTENT)
-                : new ResponseEntity<AlbumDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<AlbumModel> delete(@PathVariable long id) {
+        return this.service.delete(id)
+        		? new ResponseEntity<AlbumModel>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<AlbumModel>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

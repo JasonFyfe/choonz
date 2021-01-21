@@ -1,7 +1,8 @@
 package com.qa.choonz.persistence.domain;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,10 +14,24 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-public class Playlist {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-    @Id
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString(exclude = "tracks")
+@Entity
+public class Playlist implements Serializable {
+
+	@Serial
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -37,103 +52,5 @@ public class Playlist {
 
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
     private List<Track> tracks;
-
-    public Playlist() {
-        super();
-    }
-    
-    public Playlist(@NotNull @Size(max = 100) String name, @NotNull @Size(max = 500) String description,
-            @NotNull @Size(max = 1000) String artwork) {
-        super();
-        this.name = name;
-        this.description = description;
-        this.artwork = artwork;
-    }
-
-    public Playlist(long id, @NotNull @Size(max = 100) String name, @NotNull @Size(max = 500) String description,
-            @NotNull @Size(max = 1000) String artwork) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.artwork = artwork;
-    }
-    
-    public Playlist(long id, @NotNull @Size(max = 100) String name, @NotNull @Size(max = 500) String description,
-            @NotNull @Size(max = 1000) String artwork, List<Track> tracks) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.artwork = artwork;
-        this.tracks = tracks;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getArtwork() {
-        return artwork;
-    }
-
-    public void setArtwork(String artwork) {
-        this.artwork = artwork;
-    }
-
-    public List<Track> getTracks() {
-        return tracks;
-    }
-
-    public void setTracks(List<Track> tracks) {
-        this.tracks = tracks;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Playlist [id=").append(id).append(", name=").append(name).append(", description=")
-                .append(description).append(", artwork=").append(artwork).append(", tracks=").append(tracks)
-                .append("]");
-        return builder.toString();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(artwork, description, id, name, tracks);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Playlist)) {
-            return false;
-        }
-        Playlist other = (Playlist) obj;
-        return Objects.equals(artwork, other.artwork) && Objects.equals(description, other.description)
-                && id == other.id && Objects.equals(name, other.name) && Objects.equals(tracks, other.tracks);
-    }
 
 }

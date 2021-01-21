@@ -1,53 +1,46 @@
 package com.qa.choonz.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.GenreNotFoundException;
 import com.qa.choonz.persistence.domain.Genre;
 import com.qa.choonz.persistence.repository.GenreRepository;
-import com.qa.choonz.rest.dto.GenreDTO;
+import com.qa.choonz.rest.assembler.GenreModelAssembler;
+import com.qa.choonz.rest.model.GenreModel;
 
 @Service
 public class GenreService {
 
+	@Autowired
     private GenreRepository repo;
-    private ModelMapper mapper;
+	
+	@Autowired
+	private GenreModelAssembler genreModelAssembler;
 
-    public GenreService(GenreRepository repo, ModelMapper mapper) {
+    public GenreService() {
         super();
-        this.repo = repo;
-        this.mapper = mapper;
     }
 
-    private GenreDTO mapToDTO(Genre genre) {
-        return this.mapper.map(genre, GenreDTO.class);
+    public GenreModel create(Genre genre) {
+        return this.genreModelAssembler.toModel(this.repo.save(genre));
     }
 
-    public GenreDTO create(Genre genre) {
-        Genre created = this.repo.save(genre);
-        return this.mapToDTO(created);
+    public CollectionModel<GenreModel> findAll() {
+        return this.genreModelAssembler.toCollectionModel(this.repo.findAll());
     }
 
-    public List<GenreDTO> read() {
-        return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+    public GenreModel findById(long id) {
+        return this.genreModelAssembler.toModel(this.repo.findById(id).orElseThrow(GenreNotFoundException::new));
     }
 
-    public GenreDTO read(long id) {
-        Genre found = this.repo.findById(id).orElseThrow(GenreNotFoundException::new);
-        return this.mapToDTO(found);
-    }
-
-    public GenreDTO update(Genre genre, long id) {
-        Genre toUpdate = this.repo.findById(id).orElseThrow(GenreNotFoundException::new);
-        toUpdate.setName(genre.getName());
-        toUpdate.setDescription(genre.getDescription());
-        toUpdate.setTracks(genre.getTracks());
-        Genre updated = this.repo.save(toUpdate);
-        return this.mapToDTO(updated);
+    public GenreModel update(Genre genre, long id) {
+        Genre entity = this.repo.findById(id).orElseThrow(GenreNotFoundException::new);
+        entity.setName(genre.getName());
+        entity.setDescription(genre.getDescription());
+        entity.setTracks(genre.getTracks());
+        return this.genreModelAssembler.toModel(this.repo.save(entity));
     }
 
     public boolean delete(long id) {

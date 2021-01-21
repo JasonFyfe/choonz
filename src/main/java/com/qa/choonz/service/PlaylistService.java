@@ -1,54 +1,47 @@
 package com.qa.choonz.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.PlaylistNotFoundException;
 import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.repository.PlaylistRepository;
-import com.qa.choonz.rest.dto.PlaylistDTO;
+import com.qa.choonz.rest.assembler.PlaylistModelAssembler;
+import com.qa.choonz.rest.model.PlaylistModel;
 
 @Service
 public class PlaylistService {
 
+	@Autowired
     private PlaylistRepository repo;
-    private ModelMapper mapper;
+	
+	@Autowired
+	private PlaylistModelAssembler playlistModelAssembler;
 
-    public PlaylistService(PlaylistRepository repo, ModelMapper mapper) {
+    public PlaylistService() {
         super();
-        this.repo = repo;
-        this.mapper = mapper;
     }
 
-    private PlaylistDTO mapToDTO(Playlist playlist) {
-        return this.mapper.map(playlist, PlaylistDTO.class);
+    public PlaylistModel create(Playlist playlist) {
+        return this.playlistModelAssembler.toModel(this.repo.save(playlist));
     }
 
-    public PlaylistDTO create(Playlist playlist) {
-        Playlist created = this.repo.save(playlist);
-        return this.mapToDTO(created);
+    public CollectionModel<PlaylistModel> findAll() {
+        return this.playlistModelAssembler.toCollectionModel(this.repo.findAll());
     }
 
-    public List<PlaylistDTO> read() {
-        return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+    public PlaylistModel findById(long id) {
+        return this.playlistModelAssembler.toModel(this.repo.findById(id).orElseThrow(PlaylistNotFoundException::new));
     }
 
-    public PlaylistDTO read(long id) {
-        Playlist found = this.repo.findById(id).orElseThrow(PlaylistNotFoundException::new);
-        return this.mapToDTO(found);
-    }
-
-    public PlaylistDTO update(Playlist playlist, long id) {
-        Playlist toUpdate = this.repo.findById(id).orElseThrow(PlaylistNotFoundException::new);
-        toUpdate.setName(playlist.getName());
-        toUpdate.setDescription(playlist.getDescription());
-        toUpdate.setArtwork(playlist.getArtwork());
-        toUpdate.setTracks(playlist.getTracks());
-        Playlist updated = this.repo.save(toUpdate);
-        return this.mapToDTO(updated);
+    public PlaylistModel update(Playlist playlist, long id) {
+        Playlist entity = this.repo.findById(id).orElseThrow(PlaylistNotFoundException::new);
+        entity.setName(playlist.getName());
+        entity.setDescription(playlist.getDescription());
+        entity.setArtwork(playlist.getArtwork());
+        entity.setTracks(playlist.getTracks());
+        return this.playlistModelAssembler.toModel(this.repo.save(entity));
     }
 
     public boolean delete(long id) {

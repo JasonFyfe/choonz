@@ -1,54 +1,52 @@
 package com.qa.choonz.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 
 import com.qa.choonz.exception.AlbumNotFoundException;
 import com.qa.choonz.persistence.domain.Album;
 import com.qa.choonz.persistence.repository.AlbumRepository;
-import com.qa.choonz.rest.dto.AlbumDTO;
+import com.qa.choonz.rest.assembler.AlbumModelAssembler;
+import com.qa.choonz.rest.model.AlbumModel;
 
 @Service
 public class AlbumService {
 
+	@Autowired
     private AlbumRepository repo;
-    private ModelMapper mapper;
+	
+	@Autowired
+	private AlbumModelAssembler albumModelAssembler;
 
-    public AlbumService(AlbumRepository repo, ModelMapper mapper) {
+    public AlbumService() {
         super();
-        this.repo = repo;
-        this.mapper = mapper;
     }
 
-    private AlbumDTO mapToDTO(Album album) {
-        return this.mapper.map(album, AlbumDTO.class);
+    public AlbumModel create(Album album) {
+        Album entity = this.repo.save(album);
+        return this.albumModelAssembler.toModel(entity);
     }
 
-    public AlbumDTO create(Album album) {
-        Album created = this.repo.save(album);
-        return this.mapToDTO(created);
+    public CollectionModel<AlbumModel> findAll() {
+    	List<Album> entities = this.repo.findAll();
+        return this.albumModelAssembler.toCollectionModel(entities);
     }
 
-    public List<AlbumDTO> read() {
-        return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+    public AlbumModel findById(long id) {
+        Album entity = this.repo.findById(id).orElseThrow(AlbumNotFoundException::new);
+        return this.albumModelAssembler.toModel(entity);
     }
 
-    public AlbumDTO read(long id) {
-        Album found = this.repo.findById(id).orElseThrow(AlbumNotFoundException::new);
-        return this.mapToDTO(found);
-    }
-
-    public AlbumDTO update(Album album, long id) {
-        Album toUpdate = this.repo.findById(id).orElseThrow(AlbumNotFoundException::new);
-        toUpdate.setName(album.getName());
-        toUpdate.setTracks(album.getTracks());
-        toUpdate.setArtist(album.getArtist());
-        toUpdate.setCover(album.getCover());
-        Album updated = this.repo.save(toUpdate);
-        return this.mapToDTO(updated);
+    public AlbumModel update(Album album, long id) {
+        Album entity = this.repo.findById(id).orElseThrow(AlbumNotFoundException::new);
+        entity.setName(album.getName());
+        entity.setTracks(album.getTracks());
+        entity.setArtist(album.getArtist());
+        entity.setCover(album.getCover());
+        return this.albumModelAssembler.toModel(this.repo.save(entity));
     }
 
     public boolean delete(long id) {

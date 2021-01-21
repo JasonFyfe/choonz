@@ -1,118 +1,98 @@
 package com.qa.choonz.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.hateoas.mediatype.MessageResolver;
+import org.springframework.hateoas.mediatype.hal.CurieProvider;
+import org.springframework.hateoas.mediatype.hal.Jackson2HalModule;
+import org.springframework.hateoas.server.core.EvoInflectorLinkRelationProvider;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qa.choonz.config.SingleTenantTest;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.Track;
-import com.qa.choonz.rest.dto.PlaylistDTO;
+import com.qa.choonz.rest.assembler.PlaylistModelAssembler;
+import com.qa.choonz.rest.model.PlaylistModel;
 
 @SingleTenantTest
 @AutoConfigureMockMvc
 class PlaylistControllerIntegrationTest {
 	@Autowired
 	private MockMvc mvc;
-	
+
 	@Autowired
 	private ObjectMapper jsonifier;
-	
+
 	@Autowired
-	private ModelMapper mapper;
-	
-	private PlaylistDTO mapToDTO(Playlist playlist) {
-		return this.mapper.map(playlist, PlaylistDTO.class);
-	}
-	
+	private PlaylistModelAssembler assembler;
+
+	private ObjectMapper mapper;
+
 	private final String URI = "/playlists";
-	
+
 	private List<Track> tracks = Collections.emptyList();
-	
-	private final Playlist TEST_Playlist_1 = new Playlist(1L,"Sadbois", "whiny musics", "some url", tracks);
-	private final Playlist TEST_Playlist_2 = new Playlist(2L, "Happybois", "less whiny musics", "some other url", tracks);
-	
+
+	private final Playlist TEST_Playlist_1 = new Playlist(1L, "Sadbois", "whiny musics", "some url", tracks);
+	private final Playlist TEST_Playlist_2 = new Playlist(2L, "Happybois", "less whiny musics", "some other url",
+			tracks);
+
+	@BeforeEach
+	void setUp() {
+		this.mapper = new ObjectMapper();
+		this.mapper.registerModule(new Jackson2HalModule());
+		this.mapper.setHandlerInstantiator(new Jackson2HalModule.HalHandlerInstantiator(
+				new EvoInflectorLinkRelationProvider(), CurieProvider.NONE, MessageResolver.DEFAULTS_ONLY));
+		this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
+	}
+
 	@Test
 	void createTest() throws Exception {
-		PlaylistDTO testDTO = mapToDTO(new Playlist("Emo", "You like to cry", "Emo_artwork_URL"));
-		String testDTOAsJSON = this.jsonifier.writeValueAsString(testDTO);
-		
-		RequestBuilder request = post(URI + "/create").contentType(MediaType.APPLICATION_JSON).content(testDTOAsJSON);
-		
-		ResultMatcher checkStatus = status().isCreated();
-		
-		PlaylistDTO testSavedDTO = mapToDTO(new Playlist(3L, "Emo", "You like to cry", "Emo_artwork_URL", null));
-		String testSavedDTOAsJSON = this.jsonifier.writeValueAsString(testSavedDTO);
-		
-		ResultMatcher checkBody = content().json(testSavedDTOAsJSON);
-		
-		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkBody);
+		PlaylistModel testModel = this.assembler.toModel(TEST_Playlist_1);
+		String testModelJson = this.jsonifier.writeValueAsString(testModel);
+		RequestBuilder request = post(URI + "/").contentType(MediaType.APPLICATION_JSON).content(testModelJson);
+		this.mvc.perform(request).andExpect(status().isCreated());
 	}
-	
+
 	@Test
 	void readAllTest() throws Exception {
-		String expected = this.jsonifier.writeValueAsString(List.of(this.mapToDTO(TEST_Playlist_1),
-																	this.mapToDTO(TEST_Playlist_2)));
-		RequestBuilder request = get(URI + "/read").contentType(MediaType.APPLICATION_JSON);
-		ResultMatcher checkStatus = status().isOk();
-		MvcResult result = mvc.perform(request).andExpect(checkStatus).andReturn();
-		
-		String content = result.getResponse().getContentAsString();
-	
-		assertThat(expected).isEqualTo(content);
+		RequestBuilder request = get(URI + "/").contentType(MediaType.APPLICATION_JSON);
+		this.mvc.perform(request).andExpect(status().isOk());
 	}
-	
+
 	@Test
 	void readOneTest() throws Exception {
-		String expected = this.jsonifier.writeValueAsString(this.mapToDTO(TEST_Playlist_1));
-		
-		RequestBuilder request = get(URI + "/read/1").contentType(MediaType.APPLICATION_JSON);
-		ResultMatcher checkStatus = status().isOk();
-		MvcResult result = mvc.perform(request).andExpect(checkStatus).andReturn();
-		
-		String content = result.getResponse().getContentAsString();
-		
-		assertThat(expected).isEqualTo(content);
+		RequestBuilder request = get(URI + "/1").contentType(MediaType.APPLICATION_JSON);
+		this.mvc.perform(request).andExpect(status().isOk()).andReturn();
 	}
-	
+
 	@Test
 	void updateTest() throws Exception {
 		String toUpdate = "{\"name\": \"Jazz\",\"description\": \"Smooth like butter...\",\"artwork\": \"some url\"}";
-		String expected = this.jsonifier.writeValueAsString(this.mapToDTO(new Playlist(1L, "Jazz", "Smooth like butter...", "some url")));
-		RequestBuilder request = put(URI + "/update/1").contentType(MediaType.APPLICATION_JSON).content(toUpdate);
-		ResultMatcher checkStatus = status().isAccepted();
-		MvcResult result = mvc.perform(request).andExpect(checkStatus).andReturn();
-		
-		String content = result.getResponse().getContentAsString();
-		
-		assertThat(expected).isEqualTo(content);
+		RequestBuilder request = put(URI + "/1").contentType(MediaType.APPLICATION_JSON).content(toUpdate);
+		this.mvc.perform(request).andExpect(status().isAccepted());
 	}
-	
+
 	@Test
 	void deleteTest() throws Exception {
-		RequestBuilder request = delete(URI + "/delete/1");
+		RequestBuilder request = delete(URI + "/1");
 		ResultMatcher checkStatus = status().isNoContent();
-		
+
 		this.mvc.perform(request).andExpect(checkStatus);
 	}
 }
