@@ -67,8 +67,8 @@ public class AppConfig {
     		log.info("Preloading " + trackRepo.save(new Track("Broom People", 360, "36 Hudson in the garage...")));
     		log.info("Preloading " + trackRepo.save(new Track("This Is My House, This Is My Home", 545, "Woke when it was dark...")));
     		// Genres
-    		log.info("Preloading " + genreRepo.save(new Genre("Indie Folk", "whiny-voiced white sadboi music")));
-    		log.info("Preloading " + genreRepo.save(new Genre("Indie Rock and Roll", "straight bangers from your youth")));
+    		log.info("Preloading " + genreRepo.save(new Genre(1L, "Indie Folk", "whiny-voiced white sadboi music", null)));
+    		log.info("Preloading " + genreRepo.save(new Genre(2L, "Indie Rock and Roll", "straight bangers from your youth", null)));
     		// Playlists
     		log.info("Preloading " + playlistRepo.save(new Playlist("Sadbois", "whiny musics", "some url")));
     		log.info("Preloading " + playlistRepo.save(new Playlist("Happybois", "less whiny musics", "some other url")));
