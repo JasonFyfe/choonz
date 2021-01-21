@@ -17,22 +17,22 @@ public class GenreService {
     private GenreRepository repo;
 	
 	@Autowired
-	private GenreModelAssembler genreModelAssembler;
+	private GenreModelAssembler assembler;
 
     public GenreService() {
         super();
     }
 
     public GenreModel create(Genre genre) {
-        return this.genreModelAssembler.toModel(this.repo.save(genre));
+        return this.assembler.toModel(this.repo.save(genre));
     }
 
     public CollectionModel<GenreModel> findAll() {
-        return this.genreModelAssembler.toCollectionModel(this.repo.findAll());
+        return this.assembler.toCollectionModel(this.repo.findAll());
     }
 
     public GenreModel findById(long id) {
-        return this.genreModelAssembler.toModel(this.repo.findById(id).orElseThrow(GenreNotFoundException::new));
+        return this.assembler.toModel(this.repo.findById(id).orElseThrow(GenreNotFoundException::new));
     }
 
     public GenreModel update(Genre genre, long id) {
@@ -40,7 +40,7 @@ public class GenreService {
         entity.setName(genre.getName());
         entity.setDescription(genre.getDescription());
         entity.setTracks(genre.getTracks());
-        return this.genreModelAssembler.toModel(this.repo.save(entity));
+        return this.assembler.toModel(this.repo.save(entity));
     }
 
     public boolean delete(long id) {

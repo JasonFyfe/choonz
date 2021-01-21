@@ -1,7 +1,5 @@
 package com.qa.choonz.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
@@ -19,25 +17,22 @@ public class AlbumService {
     private AlbumRepository repo;
 	
 	@Autowired
-	private AlbumModelAssembler albumModelAssembler;
+	private AlbumModelAssembler assembler;
 
     public AlbumService() {
         super();
     }
 
     public AlbumModel create(Album album) {
-        Album entity = this.repo.save(album);
-        return this.albumModelAssembler.toModel(entity);
+        return this.assembler.toModel(this.repo.save(album));
     }
 
     public CollectionModel<AlbumModel> findAll() {
-    	List<Album> entities = this.repo.findAll();
-        return this.albumModelAssembler.toCollectionModel(entities);
+        return this.assembler.toCollectionModel(this.repo.findAll());
     }
 
     public AlbumModel findById(long id) {
-        Album entity = this.repo.findById(id).orElseThrow(AlbumNotFoundException::new);
-        return this.albumModelAssembler.toModel(entity);
+        return this.assembler.toModel(this.repo.findById(id).orElseThrow(AlbumNotFoundException::new));
     }
 
     public AlbumModel update(Album album, long id) {
@@ -46,7 +41,7 @@ public class AlbumService {
         entity.setTracks(album.getTracks());
         entity.setArtist(album.getArtist());
         entity.setCover(album.getCover());
-        return this.albumModelAssembler.toModel(this.repo.save(entity));
+        return this.assembler.toModel(this.repo.save(entity));
     }
 
     public boolean delete(long id) {

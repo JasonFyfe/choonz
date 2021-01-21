@@ -49,7 +49,6 @@ public class GenreControllerIntegrationTest {
 	private final String URI = "/genres";
 
 	private final Genre TEST_Genre_1 = new Genre(1L, "Indie Folk", "whiny-voiced white sadboi music", tracks);
-	private final Genre TEST_Genre_2 = new Genre(2L, "Indie Rock and Roll", "straight bangers from your youth", tracks);
 
 	@BeforeEach
 	void setUp() {

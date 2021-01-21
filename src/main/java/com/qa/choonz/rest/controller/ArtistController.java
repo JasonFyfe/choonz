@@ -32,26 +32,22 @@ public class ArtistController {
 
     @PostMapping
     public ResponseEntity<ArtistModel> create(@RequestBody Artist artist) {
-    	ArtistModel artistModel = this.service.create(artist);
-        return new ResponseEntity<>(artistModel, HttpStatus.CREATED);
+        return new ResponseEntity<ArtistModel>(this.service.create(artist), HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<CollectionModel<ArtistModel>> findAll() {
-    	CollectionModel<ArtistModel> artistModels = this.service.findAll();
-    	return new ResponseEntity<>(artistModels, HttpStatus.OK);
+    	return new ResponseEntity<CollectionModel<ArtistModel>>(this.service.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ArtistModel> findById(@PathVariable long id) {
-    	ArtistModel artistModel = this.service.findById(id);
-    	return new ResponseEntity<>(artistModel, HttpStatus.OK);
+    	return new ResponseEntity<ArtistModel>(this.service.findById(id), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ArtistModel> update(@RequestBody Artist artist, @PathVariable long id) {
-    	ArtistModel artistModel = this.service.update(artist, id);
-        return new ResponseEntity<>(artistModel, HttpStatus.ACCEPTED);
+        return new ResponseEntity<ArtistModel>(this.service.update(artist, id), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")

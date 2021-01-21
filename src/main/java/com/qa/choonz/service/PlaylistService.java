@@ -17,22 +17,22 @@ public class PlaylistService {
     private PlaylistRepository repo;
 	
 	@Autowired
-	private PlaylistModelAssembler playlistModelAssembler;
+	private PlaylistModelAssembler assembler;
 
     public PlaylistService() {
         super();
     }
 
     public PlaylistModel create(Playlist playlist) {
-        return this.playlistModelAssembler.toModel(this.repo.save(playlist));
+        return this.assembler.toModel(this.repo.save(playlist));
     }
 
     public CollectionModel<PlaylistModel> findAll() {
-        return this.playlistModelAssembler.toCollectionModel(this.repo.findAll());
+        return this.assembler.toCollectionModel(this.repo.findAll());
     }
 
     public PlaylistModel findById(long id) {
-        return this.playlistModelAssembler.toModel(this.repo.findById(id).orElseThrow(PlaylistNotFoundException::new));
+        return this.assembler.toModel(this.repo.findById(id).orElseThrow(PlaylistNotFoundException::new));
     }
 
     public PlaylistModel update(Playlist playlist, long id) {
@@ -41,7 +41,7 @@ public class PlaylistService {
         entity.setDescription(playlist.getDescription());
         entity.setArtwork(playlist.getArtwork());
         entity.setTracks(playlist.getTracks());
-        return this.playlistModelAssembler.toModel(this.repo.save(entity));
+        return this.assembler.toModel(this.repo.save(entity));
     }
 
     public boolean delete(long id) {

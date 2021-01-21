@@ -50,13 +50,6 @@ public class AlbumControllerIntegrationTest {
 	private final String URI = "/albums";
 
 	private final Album TEST_Album_1 = new Album(1L, "We Shall All Be Healed", "some url", tracks, null);
-	private final Album TEST_Album_2 = new Album(2L, "Tallahassee", "some other url", tracks, null);
-	private final Album TEST_Album_3 = new Album(3L, "In League With Dragons", "some other other url", tracks, null);
-	private final Album TEST_Album_4 = new Album(4L, "The Sunset Tree", "and another", tracks, null);
-	private final Album TEST_Album_5 = new Album(5L, "These Four Walls", "and again!", tracks, null);
-
-	private final List<Album> LIST_OF_ALBUMS = List.of(TEST_Album_1, TEST_Album_2, TEST_Album_3, TEST_Album_4,
-			TEST_Album_5);
 
 	@BeforeEach
 	void setUp() {

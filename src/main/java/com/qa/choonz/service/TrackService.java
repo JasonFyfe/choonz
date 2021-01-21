@@ -17,22 +17,22 @@ public class TrackService {
     private TrackRepository repo;
 	
 	@Autowired
-	private TrackModelAssembler trackModelAssembler;
+	private TrackModelAssembler assembler;
 
     public TrackService() {
         super();
     }
     
     public TrackModel create(Track track) {
-    	return this.trackModelAssembler.toModel(this.repo.save(track));
+    	return this.assembler.toModel(this.repo.save(track));
     }
 
     public CollectionModel<TrackModel> findAll() {
-        return this.trackModelAssembler.toCollectionModel(this.repo.findAll());
+        return this.assembler.toCollectionModel(this.repo.findAll());
     }
 
     public TrackModel findById(long id) {
-    	return this.trackModelAssembler.toModel(this.repo.findById(id).orElseThrow(TrackNotFoundException::new));
+    	return this.assembler.toModel(this.repo.findById(id).orElseThrow(TrackNotFoundException::new));
     }
 
     public TrackModel update(Track track, long id) {
@@ -43,7 +43,7 @@ public class TrackService {
         entity.setLyrics(track.getLyrics());
         entity.setPlaylist(track.getPlaylist());
         entity.setGenre(track.getGenre());
-        return this.trackModelAssembler.toModel(this.repo.save(entity));
+        return this.assembler.toModel(this.repo.save(entity));
     }
 
     public boolean delete(long id) {
