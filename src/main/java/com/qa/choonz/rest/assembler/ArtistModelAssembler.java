@@ -44,22 +44,4 @@ public class ArtistModelAssembler extends RepresentationModelAssemblerSupport<Ar
          
         return artistModels;
     }
-	
-	// Customising Album to add to the Artist JSON
-//	private List<AlbumModel> toAlbumModel(List<Album> albums) {
-//        if (albums.isEmpty())
-//            return Collections.emptyList();
-// 
-//        return albums.stream()
-//                .map(album -> AlbumModel.builder()
-//                        .id(album.getId())
-//                        .name(album.getName())
-//                        .cover(album.getCover())
-//                        .build()
-//                        .add(linkTo(
-//                                methodOn(WebController.class)
-//                                .getActorById(actor.getId()))
-//                                .withSelfRel()))
-//                .collect(Collectors.toList());
-//    }
 }
