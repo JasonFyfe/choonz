@@ -70,8 +70,8 @@ public class AppConfig {
     		log.info("Preloading " + genreRepo.save(new Genre(1L, "Indie Folk", "whiny-voiced white sadboi music", null)));
     		log.info("Preloading " + genreRepo.save(new Genre(2L, "Indie Rock and Roll", "straight bangers from your youth", null)));
     		// Playlists
-    		log.info("Preloading " + playlistRepo.save(new Playlist("Sadbois", "whiny musics", "some url")));
-    		log.info("Preloading " + playlistRepo.save(new Playlist("Happybois", "less whiny musics", "some other url")));
+    		log.info("Preloading " + playlistRepo.save(new Playlist(1L, "Sadbois", "whiny musics", "some url", null)));
+    		log.info("Preloading " + playlistRepo.save(new Playlist(2L, "Happybois", "less whiny musics", "some other url", null)));
     	};
     }
 
