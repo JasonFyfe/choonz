@@ -12,9 +12,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -25,7 +25,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.Album;
 import com.qa.choonz.persistence.domain.Artist;
-import com.qa.choonz.rest.dto.ArtistDTO;
+import com.qa.choonz.rest.assembler.ArtistModelAssembler;
+import com.qa.choonz.rest.model.ArtistModel;
 
 @SingleTenantTest
 @AutoConfigureMockMvc
@@ -37,41 +38,40 @@ public class ArtistControllerIntegrationTest {
 	private ObjectMapper jsonifier;
 	
 	@Autowired
-	private ModelMapper mapper;
+	private ArtistModelAssembler assembler;
 	
 	private List<Album> albums = Collections.emptyList();
-	
-	private ArtistDTO mapToDTO(Artist artist) {
-		return this.mapper.map(artist, ArtistDTO.class);
-	}
 	
 	private final String URI = "/artists";
 	
 	private final Artist TEST_Artist_1 = new Artist(1L, "The Mountain Goats", albums);
 	private final Artist TEST_Artist_2 = new Artist(2L, "We Were Promised Jetpacks", albums);
 	
+	private final List<Artist> LIST_OF_ARTISTS = List.of(TEST_Artist_1, TEST_Artist_2);
+	
 	@Test
 	void createTest() throws Exception {
-		ArtistDTO testDTO = mapToDTO(new Artist("Biffy Clyro"));
-		String testDTOAsJSON = this.jsonifier.writeValueAsString(testDTO);
+		ArtistModel testModel = this.assembler.toModel(TEST_Artist_1);
+		String expected = this.jsonifier.writeValueAsString(testModel);
 		
-		RequestBuilder request = post(URI + "/create").contentType(MediaType.APPLICATION_JSON).content(testDTOAsJSON);
+		RequestBuilder request = post(URI + "/").contentType(MediaType.APPLICATION_JSON).content(expected);
 		
 		ResultMatcher checkStatus = status().isCreated();
 		
-		ArtistDTO testSavedDTO = mapToDTO(new Artist(3L, "Biffy Clyro"));
-		String testSavedDTOAsJSON = this.jsonifier.writeValueAsString(testSavedDTO);
+		ArtistModel testSavedModel = this.assembler.toModel(TEST_Artist_1);
+		testSavedModel.setId(3L);
+		String testSavedModelAsJSON = this.jsonifier.writeValueAsString(testSavedModel);
 		
-		ResultMatcher checkBody = content().json(testSavedDTOAsJSON);
+		ResultMatcher checkBody = content().json(testSavedModelAsJSON);
 		
 		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkBody);
 	}
 	
 	@Test
 	void readAllTest() throws Exception {
-		String expected = this.jsonifier.writeValueAsString(List.of(this.mapToDTO(TEST_Artist_1),
-																	this.mapToDTO(TEST_Artist_2)));
-		RequestBuilder request = get(URI + "/read").contentType(MediaType.APPLICATION_JSON);
+		CollectionModel<ArtistModel> models = this.assembler.toCollectionModel(LIST_OF_ARTISTS);
+		String expected = this.jsonifier.writeValueAsString(models);
+		RequestBuilder request = get(URI + "/").contentType(MediaType.APPLICATION_JSON);
 		ResultMatcher checkStatus = status().isOk();
 		MvcResult result = mvc.perform(request).andExpect(checkStatus).andReturn();
 		
@@ -82,9 +82,9 @@ public class ArtistControllerIntegrationTest {
 	
 	@Test
 	void readOneTest() throws Exception {
-		String expected = this.jsonifier.writeValueAsString(this.mapToDTO(TEST_Artist_1));
+		String expected = this.jsonifier.writeValueAsString(this.assembler.toModel(TEST_Artist_1));
 		
-		RequestBuilder request = get(URI + "/read/1").contentType(MediaType.APPLICATION_JSON);
+		RequestBuilder request = get(URI + "/1").contentType(MediaType.APPLICATION_JSON);
 		ResultMatcher checkStatus = status().isOk();
 		MvcResult result = mvc.perform(request).andExpect(checkStatus).andReturn();
 		
@@ -96,8 +96,8 @@ public class ArtistControllerIntegrationTest {
 	@Test
 	void updateTest() throws Exception {
 		String toUpdate = "{\"name\":\"Wardruna\"}";
-		String expected = this.jsonifier.writeValueAsString(this.mapToDTO(new Artist(1L, "Wardruna")));
-		RequestBuilder request = put(URI + "/update/1").contentType(MediaType.APPLICATION_JSON).content(toUpdate);
+		String expected = this.jsonifier.writeValueAsString(this.assembler.toModel(TEST_Artist_1));
+		RequestBuilder request = put(URI + "/1").contentType(MediaType.APPLICATION_JSON).content(toUpdate);
 		ResultMatcher checkStatus = status().isAccepted();
 		MvcResult result = mvc.perform(request).andExpect(checkStatus).andReturn();
 		
@@ -108,7 +108,7 @@ public class ArtistControllerIntegrationTest {
 	
 	@Test
 	void deleteTest() throws Exception {
-		RequestBuilder request = delete(URI + "/delete/1");
+		RequestBuilder request = delete(URI + "/1");
 		ResultMatcher checkStatus = status().isNoContent();
 		
 		this.mvc.perform(request).andExpect(checkStatus);

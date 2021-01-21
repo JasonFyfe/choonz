@@ -52,8 +52,8 @@ public class AppConfig {
     	return args ->
     	{
     		// Artists
-    		log.info("Preloading " + artistRepo.save(new Artist("The Mountain Goats")));
-    		log.info("Preloading " + artistRepo.save(new Artist("We Were Promised Jetpacks")));
+    		log.info("Preloading " + artistRepo.save(new Artist(1L, "The Mountain Goats", null)));
+    		log.info("Preloading " + artistRepo.save(new Artist(2L, "We Were Promised Jetpacks", null)));
     		// Albums
     		log.info("Preloading " + albumRepo.save(new Album("We Shall All Be Healed", "some url")));
     		log.info("Preloading " + albumRepo.save(new Album("Tallahassee", "some other url")));

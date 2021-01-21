@@ -1,7 +1,7 @@
 package com.qa.choonz.rest.controller;
 
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qa.choonz.persistence.domain.Artist;
-import com.qa.choonz.rest.dto.ArtistDTO;
+import com.qa.choonz.rest.model.ArtistModel;
 import com.qa.choonz.service.ArtistService;
 
 @RestController
@@ -23,37 +23,42 @@ import com.qa.choonz.service.ArtistService;
 @CrossOrigin
 public class ArtistController {
 
+	@Autowired
     private ArtistService service;
 
-    public ArtistController(ArtistService service) {
+    public ArtistController() {
         super();
-        this.service = service;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<ArtistDTO> create(@RequestBody Artist artist) {
-        return new ResponseEntity<ArtistDTO>(this.service.create(artist), HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody Artist artist) {
+    	ArtistModel artistModel = this.service.create(artist);
+        return new ResponseEntity<>(artistModel, HttpStatus.CREATED);
     }
 
-    @GetMapping("/read")
-    public ResponseEntity<List<ArtistDTO>> read() {
-        return new ResponseEntity<List<ArtistDTO>>(this.service.read(), HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<CollectionModel<ArtistModel>> findAll() {
+    	CollectionModel<ArtistModel> artistModels = this.service.findAll();
+    	return new ResponseEntity<>(artistModels, HttpStatus.OK);
     }
 
-    @GetMapping("/read/{id}")
-    public ResponseEntity<ArtistDTO> read(@PathVariable long id) {
-        return new ResponseEntity<ArtistDTO>(this.service.read(id), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<ArtistModel> findById(@PathVariable long id) {
+    	ArtistModel artistModel = this.service.findById(id);
+    	return new ResponseEntity<>(artistModel, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<ArtistDTO> update(@RequestBody Artist artist, @PathVariable long id) {
-        return new ResponseEntity<ArtistDTO>(this.service.update(artist, id), HttpStatus.ACCEPTED);
+    @PutMapping("/{id}")
+    public ResponseEntity<ArtistModel> update(@RequestBody Artist artist, @PathVariable long id) {
+    	ArtistModel artistModel = this.service.update(artist, id);
+        return new ResponseEntity<>(artistModel, HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<ArtistDTO> delete(@PathVariable long id) {
-        return this.service.delete(id) ? new ResponseEntity<ArtistDTO>(HttpStatus.NO_CONTENT)
-                : new ResponseEntity<ArtistDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Artist> delete(@PathVariable long id) {
+        return this.service.delete(id)
+        		? new ResponseEntity<Artist>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<Artist>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
