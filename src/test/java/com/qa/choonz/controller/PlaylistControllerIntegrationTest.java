@@ -49,8 +49,6 @@ class PlaylistControllerIntegrationTest {
 	private List<Track> tracks = Collections.emptyList();
 
 	private final Playlist TEST_Playlist_1 = new Playlist(1L, "Sadbois", "whiny musics", "some url", tracks);
-	private final Playlist TEST_Playlist_2 = new Playlist(2L, "Happybois", "less whiny musics", "some other url",
-			tracks);
 
 	@BeforeEach
 	void setUp() {

@@ -1,7 +1,5 @@
 package com.qa.choonz.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
@@ -19,38 +17,28 @@ public class ArtistService {
     private ArtistRepository repo;
 	
 	@Autowired
-	private ArtistModelAssembler artistModelAssembler;
+	private ArtistModelAssembler assembler;
 
     public ArtistService() {
         super();
     }
 
-    // TODO Implement exception
     public ArtistModel create(Artist artist) {
-    	Artist entity = this.repo.save(artist);
-    	ArtistModel model = artistModelAssembler.toModel(entity);
-        return model;
+    	return this.assembler.toModel(this.repo.save(artist));
     }
     
-    // TODO Implement exception
     public CollectionModel<ArtistModel> findAll() {
-    	List<Artist> entities = this.repo.findAll();
-    	CollectionModel<ArtistModel> models = artistModelAssembler.toCollectionModel(entities);
-    	return models;
+    	return this.assembler.toCollectionModel(this.repo.findAll());
     }
-    
-    // TODO Implement exception
+
     public ArtistModel findById(long id) {
-    	Artist entity = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
-    	ArtistModel model = artistModelAssembler.toModel(entity);
-        return model;
+    	return this.assembler.toModel(this.repo.findById(id).orElseThrow(ArtistNotFoundException::new));
     }
     
     public ArtistModel update(Artist artist, long id) {
         Artist entity = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
         entity.setName(artist.getName());
-        ArtistModel model = artistModelAssembler.toModel(this.repo.save(entity));
-        return model;
+        return this.assembler.toModel(this.repo.save(entity));
     }
 
     public boolean delete(long id) {
