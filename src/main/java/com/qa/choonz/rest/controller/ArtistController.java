@@ -19,7 +19,7 @@ import com.qa.choonz.rest.model.ArtistModel;
 import com.qa.choonz.service.ArtistService;
 
 @RestController
-@RequestMapping("/artists")
+@RequestMapping(value = "/artists", produces = "application/hal+json")
 @CrossOrigin
 public class ArtistController {
 
@@ -31,7 +31,7 @@ public class ArtistController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Artist artist) {
+    public ResponseEntity<ArtistModel> create(@RequestBody Artist artist) {
     	ArtistModel artistModel = this.service.create(artist);
         return new ResponseEntity<>(artistModel, HttpStatus.CREATED);
     }
@@ -55,10 +55,10 @@ public class ArtistController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Artist> delete(@PathVariable long id) {
+    public ResponseEntity<ArtistModel> delete(@PathVariable long id) {
         return this.service.delete(id)
-        		? new ResponseEntity<Artist>(HttpStatus.NO_CONTENT)
-                : new ResponseEntity<Artist>(HttpStatus.INTERNAL_SERVER_ERROR);
+        		? new ResponseEntity<ArtistModel>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<ArtistModel>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
