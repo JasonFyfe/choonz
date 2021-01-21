@@ -9,7 +9,7 @@ import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile({"devsecure", "prod"})
+@Profile({"devmt", "prod"})
 @Component
 public class TenantConnectionProvider implements MultiTenantConnectionProvider {
 
