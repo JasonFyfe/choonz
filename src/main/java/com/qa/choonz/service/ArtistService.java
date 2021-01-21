@@ -41,7 +41,7 @@ public class ArtistService {
     
     // TODO Implement exception
     public ArtistModel findById(long id) {
-    	Artist entity = this.repo.getOne(id);
+    	Artist entity = this.repo.findById(id).orElseThrow(ArtistNotFoundException::new);
     	ArtistModel model = artistModelAssembler.toModel(entity);
         return model;
     }

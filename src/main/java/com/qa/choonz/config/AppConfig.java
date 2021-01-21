@@ -55,11 +55,11 @@ public class AppConfig {
     		log.info("Preloading " + artistRepo.save(new Artist(1L, "The Mountain Goats", null)));
     		log.info("Preloading " + artistRepo.save(new Artist(2L, "We Were Promised Jetpacks", null)));
     		// Albums
-    		log.info("Preloading " + albumRepo.save(new Album("We Shall All Be Healed", "some url")));
-    		log.info("Preloading " + albumRepo.save(new Album("Tallahassee", "some other url")));
-    		log.info("Preloading " + albumRepo.save(new Album("In League With Dragons", "some other other url")));
-    		log.info("Preloading " + albumRepo.save(new Album("The Sunset Tree", "and another")));
-    		log.info("Preloading " + albumRepo.save(new Album("These Four Walls", "and again!")));
+    		log.info("Preloading " + albumRepo.save(new Album(1L, "We Shall All Be Healed", "some url", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(2L, "Tallahassee", "some other url", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(3L, "In League With Dragons", "some other other url", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(4L, "The Sunset Tree", "and another", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(5L, "These Four Walls", "and again!", null, null)));
     		// Tracks
     		log.info("Preloading " + trackRepo.save(new Track("Cotton", 360, "This song is for the rats...")));
     		log.info("Preloading " + trackRepo.save(new Track("Oceanographers Choice", 400, "WELL...")));
