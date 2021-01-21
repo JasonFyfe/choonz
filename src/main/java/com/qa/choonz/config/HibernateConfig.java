@@ -19,30 +19,31 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import com.qa.choonz.ChoonzApplication;
 
-@Profile({"devsecure", "prod"})
+@Profile({ "devmt", "prod" })
 @Configuration
 public class HibernateConfig {
 
-    @Bean
-    public JpaVendorAdapter jpaVendorAdapter() {
-        return new HibernateJpaVendorAdapter();
-    }
+	@Bean
+	public JpaVendorAdapter jpaVendorAdapter() {
+		return new HibernateJpaVendorAdapter();
+	}
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaProperties jpaProperties,
-            MultiTenantConnectionProvider multiTenantConnectionProvider, CurrentTenantIdentifierResolver tenantIdentifierResolver) {
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
+			JpaProperties jpaProperties, MultiTenantConnectionProvider multiTenantConnectionProvider,
+			CurrentTenantIdentifierResolver tenantIdentifierResolver) {
 
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource);
-        em.setPackagesToScan(ChoonzApplication.class.getPackage().getName());
-        em.setJpaVendorAdapter(jpaVendorAdapter());
+		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+		em.setDataSource(dataSource);
+		em.setPackagesToScan(ChoonzApplication.class.getPackage().getName());
+		em.setJpaVendorAdapter(jpaVendorAdapter());
 
-        Map<String, Object> jpaPropertiesMap = new HashMap<>(jpaProperties.getProperties());
-        jpaPropertiesMap.put(Environment.MULTI_TENANT, MultiTenancyStrategy.SCHEMA);
-        jpaPropertiesMap.put(Environment.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);
-        jpaPropertiesMap.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, tenantIdentifierResolver);
-        em.setJpaPropertyMap(jpaPropertiesMap);
+		Map<String, Object> jpaPropertiesMap = new HashMap<>(jpaProperties.getProperties());
+		jpaPropertiesMap.put(Environment.MULTI_TENANT, MultiTenancyStrategy.SCHEMA);
+		jpaPropertiesMap.put(Environment.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProvider);
+		jpaPropertiesMap.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, tenantIdentifierResolver);
+		em.setJpaPropertyMap(jpaPropertiesMap);
 
-        return em;
-    }
+		return em;
+	}
 }

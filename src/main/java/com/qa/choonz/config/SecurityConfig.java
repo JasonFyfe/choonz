@@ -12,34 +12,27 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 import com.qa.choonz.service.UserService;
 
-@Profile({"devsecure", "prod"})
+@Profile({ "devmt", "prod" })
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserService userService;
+	private UserService userService;
 
-    public SecurityConfig(UserService userService) {
-        this.userService = userService;
-    }
+	public SecurityConfig(UserService userService) {
+		this.userService = userService;
+	}
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService);
-    }
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userService);
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/h2/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .csrf().disable()
-                .headers().frameOptions().disable();
-    }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/h2/**").permitAll().antMatchers(HttpMethod.POST, "/users").permitAll()
+				.anyRequest().authenticated().and().httpBasic().and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable().headers().frameOptions()
+				.disable();
+	}
 }
