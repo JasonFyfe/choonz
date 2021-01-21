@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.qa.choonz.persistence.repository.UserRepository;
 
-@Profile({"devsecure", "prod"})
+@Profile({"devmt", "prod"})
 @Configuration
 public class FlywayConfig {
 

@@ -12,7 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 import com.qa.choonz.service.UserService;
 
-@Profile({"devsecure", "prod"})
+@Profile({"devmt", "prod"})
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

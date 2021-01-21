@@ -19,7 +19,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import com.qa.choonz.ChoonzApplication;
 
-@Profile({"devsecure", "prod"})
+@Profile({"devmt", "prod"})
 @Configuration
 public class HibernateConfig {
 
