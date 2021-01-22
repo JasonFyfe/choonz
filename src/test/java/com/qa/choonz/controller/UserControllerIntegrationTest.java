@@ -6,9 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +22,13 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.qa.choonz.config.SingleTenantTest;
-import com.qa.choonz.persistence.domain.Album;
-import com.qa.choonz.persistence.domain.Track;
-import com.qa.choonz.rest.assembler.AlbumModelAssembler;
-import com.qa.choonz.rest.model.AlbumModel;
+import com.qa.choonz.persistence.domain.User;
+import com.qa.choonz.rest.assembler.UserModelAssembler;
+import com.qa.choonz.rest.model.UserModel;
 
 @SingleTenantTest
 @AutoConfigureMockMvc
-public class AlbumControllerIntegrationTest {
+public class UserControllerIntegrationTest {
 
 	@Autowired
 	private MockMvc mvc;
@@ -41,15 +37,13 @@ public class AlbumControllerIntegrationTest {
 	private ObjectMapper jsonifier;
 
 	@Autowired
-	private AlbumModelAssembler assembler;
+	private UserModelAssembler assembler;
 
 	private ObjectMapper mapper;
 
-	private List<Track> tracks = Collections.emptyList();
+	private final String URI = "/users";
 
-	private final String URI = "/albums";
-
-	private final Album TEST_ALBUM_1 = new Album(1L, "We Shall All Be Healed", "some url", tracks, null);
+	private final User TEST_USER_1 = new User(1L, "admin", "password");
 
 	@BeforeEach
 	void setUp() {
@@ -62,7 +56,7 @@ public class AlbumControllerIntegrationTest {
 
 	@Test
 	void createTest() throws Exception {
-		AlbumModel testModel = this.assembler.toModel(TEST_ALBUM_1);
+		UserModel testModel = this.assembler.toModel(TEST_USER_1);
 		String testModelJson = this.jsonifier.writeValueAsString(testModel);
 
 		RequestBuilder request = post(URI + "/").contentType(MediaType.APPLICATION_JSON).content(testModelJson);
@@ -84,7 +78,7 @@ public class AlbumControllerIntegrationTest {
 
 	@Test
 	void updateTest() throws Exception {
-		String toUpdate = "{\"name\":\"Hello\",\"cover\":\"www.world.com\"}";
+		String toUpdate = "{\"username\":\"admintoo\",\"password\":\"passwordtoo\"}";
 		RequestBuilder request = put(URI + "/1").contentType(MediaType.APPLICATION_JSON).content(toUpdate);
 		this.mvc.perform(request).andExpect(status().isAccepted());
 	}
