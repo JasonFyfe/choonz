@@ -1,18 +1,18 @@
 package com.qa.choonz.persistence.domain;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class User {
+public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,9 +38,34 @@ public class User {
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
-	
-	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private List<Role> roles;
-	
-	private boolean isActive;
+
+	@Override
+	@JsonIgnore
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	@JsonIgnore
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	@JsonIgnore
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	@JsonIgnore
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	@JsonIgnore
+	public boolean isEnabled() {
+		return true;
+	}
 }

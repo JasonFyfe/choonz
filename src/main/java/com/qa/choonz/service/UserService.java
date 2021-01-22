@@ -4,6 +4,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +17,7 @@ import com.qa.choonz.rest.assembler.UserModelAssembler;
 import com.qa.choonz.rest.model.UserModel;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private UserRepository repo;
@@ -47,13 +50,18 @@ public class UserService {
         User entity = this.repo.findById(id).orElseThrow(TrackNotFoundException::new);
         entity.setUsername(user.getUsername());
         entity.setPassword(user.getPassword());
-        entity.setRoles(user.getRoles());
         return this.userModelAssembler.toModel(this.repo.save(entity));
     }
     
     public boolean delete(long id) {
         this.repo.deleteById(id);
         return !this.repo.existsById(id);
+    }
+    
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    	return repo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with the specified username is not found"));
     }
 
 }
