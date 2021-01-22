@@ -18,11 +18,13 @@ import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.persistence.domain.Genre;
 import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.Track;
+import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.persistence.repository.AlbumRepository;
 import com.qa.choonz.persistence.repository.ArtistRepository;
 import com.qa.choonz.persistence.repository.GenreRepository;
 import com.qa.choonz.persistence.repository.PlaylistRepository;
 import com.qa.choonz.persistence.repository.TrackRepository;
+import com.qa.choonz.persistence.repository.UserRepository;
 
 @Configuration
 public class AppConfig {
@@ -57,10 +59,14 @@ public class AppConfig {
     							   AlbumRepository albumRepo,
     							   TrackRepository trackRepo,
     							   GenreRepository genreRepo,
-    							   PlaylistRepository playlistRepo)
+    							   PlaylistRepository playlistRepo,
+    							   UserRepository userRepo)
     {
     	return args ->
     	{
+    		// Users
+    		log.info("Preloading " + userRepo.save(new User(1L, "admin", "password")));
+    		log.info("Preloading " + userRepo.save(new User(2L, "user", "password")));
     		// Artists
     		log.info("Preloading " + artistRepo.save(new Artist(1L, "The Mountain Goats", null)));
     		log.info("Preloading " + artistRepo.save(new Artist(2L, "We Were Promised Jetpacks", null)));
