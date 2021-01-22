@@ -17,7 +17,6 @@ import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.rest.assembler.UserModelAssembler;
 import com.qa.choonz.rest.controller.UserController;
-import com.qa.choonz.rest.model.TrackModel;
 import com.qa.choonz.rest.model.UserModel;
 import com.qa.choonz.service.UserService;
 
@@ -34,7 +33,7 @@ public class UserControllerUnitTest {
 	private UserModelAssembler assembler;
 	
 	private final User TEST_USER_1 = new User(1L, "admin", "password");
-	private final User TEST_USER_2 = new User(2L, "admintoo", "passwordtoo");
+	private final User TEST_USER_2 = new User(2L, "user", "password");
 	
 	private final List<User> LISTOFUSER = List.of(TEST_USER_1, TEST_USER_2);
 
