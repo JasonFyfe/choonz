@@ -1,6 +1,7 @@
 package com.qa.choonz.config;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -18,6 +19,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import com.qa.choonz.ChoonzApplication;
+
+/* Configures hibernate to support multi-tenancy */
 
 @Profile({"devmt", "prod"})
 @Configuration

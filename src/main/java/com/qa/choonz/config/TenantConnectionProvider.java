@@ -1,6 +1,7 @@
 package com.qa.choonz.config;
 
 import java.sql.Connection;
+
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -8,6 +9,10 @@ import javax.sql.DataSource;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+
+/* Provides connections based on tenant identifier. 
+   Reuses the JDBC connection pool to serve all tenants, but before using the Connection,
+   it alters it with the SET SCHEMA command to reference the schema named by the tenant identifier.*/
 
 @Profile({"devmt", "prod"})
 @Component

@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Profile;
 
 import com.qa.choonz.persistence.repository.UserRepository;
 
+/* Performs schema migration depending on current tenant */
+
 @Profile({"devmt", "prod"})
 @Configuration
 public class FlywayConfig {
