@@ -52,6 +52,43 @@ body {
     overflow: hidden;
   }
 
+  .albumone {
+    max-width: 650px;
+    padding: 20px;
+    margin: 30px auto;
+    background-color: #FFF;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
+    overflow: hidden;
+  }
+
+  .artistone {
+    max-width: 650px;
+    padding: 20px;
+    margin: 30px auto;
+    background-color: #FFF;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
+    overflow: hidden;
+  }
+
+  .genreone {
+    max-width: 650px;
+    padding: 20px;
+    margin: 30px auto;
+    background-color: #FFF;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
+    overflow: hidden;
+  }
+
+  .playlistone {
+    max-width: 650px;
+    padding: 20px;
+    margin: 30px auto;
+    background-color: #FFF;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
+    overflow: hidden;
+  }
+
+
 
 
   

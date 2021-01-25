@@ -37,6 +37,7 @@ function genreTemplate(genre) {
                 <h3>Description: ${genre.description} </h3>
                 <h4>Tracks: ${genre.tracks} </h4>
                 <button onclick="deleteByid(${genre.id})">Delete</button>
+                <input type="button" onclick="location.href='genre.html?id='+${genre.id};" value="View real" />
                 </div> 
                 `
 

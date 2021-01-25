@@ -8,7 +8,7 @@ for(let param of params ){
 }
 
 function getData(id){
-    fetch('http://localhost:8082/albums/'+id)
+    fetch('http://localhost:8082/playlists/'+id)
       .then(
         function(response) {
           if (response.status !== 200) {
@@ -22,11 +22,12 @@ function getData(id){
             
 
             document.getElementById("main").innerHTML =  `
-                <div class ="albumone">
+                <div class ="playlistone">
                 <h1>${data.id}</h1>    
                 <h2>${data.name}</h2>
-                <h4>Tracks: ${data.tracks}</h4>
-                <p>Cover: ${data.cover}</p>
+                <h3>Description: ${data.description}</h3>
+                <h4>Artwork: ${data.artwork}</h4>
+                <h5>Tracks: ${data.tracks}</h5>
                 <button onclick="deleteByid(${data.id})">Delete</button>
                 
                 </div> 
@@ -42,7 +43,7 @@ function getData(id){
 
 
     function deleteByid(id){
-        fetch("http://localhost:8082/albums/"+id, {
+        fetch("http://localhost:8082/playlists/"+id, {
             method: 'delete',
             headers: {
               "Content-type": "application/json; charset=UTF-8"
