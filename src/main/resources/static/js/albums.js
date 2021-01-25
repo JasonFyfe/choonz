@@ -9,7 +9,7 @@ albumTemplate = (album) => {
                 <h4>Tracks: ${album.tracks}</h4>
                 <p>Cover: ${album.cover}</p>
                 <button onclick="remove(${album.id})">Delete</button>
-                <input type="button" onclick="location.href='album.html?id='${album.id};" value="View real" />  
+                <input type="button" onclick="location.href='album.html?id='+${album.id};" value="View real" />  
             </div>`
 }
 

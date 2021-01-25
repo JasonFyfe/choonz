@@ -9,7 +9,7 @@ trackTemplate = (track) => {
                 <h3>Duration: ${track.duration}</h3>
                 <h4>Lyrics: ${track.lyrics}</h4>  
                 <button onclick="remove(${track.id})">Delete</button>
-                <input type="button" onclick="location.href='track.html?id='${track.id};" value="View real" />        
+                <input type="button" onclick="location.href='track.html?id='+${track.id};" value="View real" />        
             </div>`
 
 }
@@ -63,7 +63,7 @@ read = () => {
             }
             response.json().then(data => {
                 document.querySelector('#main').innerHTML =
-                    `${data._embedded.tracks.map(trackTemplate).join('')}`
+                    `${data._embedded.artists.map(trackTemplate).join('')}`
             });
         }
         )
