@@ -3,13 +3,13 @@ const URL = 'http://localhost:8082/albums/'
 // template
 albumTemplate = (album) => {
     return `
-            <div class ="album">
+            <div id=${album.id} class ="album">
                 <h1>${album.id}</h1>    
                 <h2>${album.name}</h2>
                 <h4>Tracks: ${album.tracks}</h4>
                 <p>Cover: ${album.cover}</p>
                 <button onclick="remove(${album.id})">Delete</button>
-                <input type="button" onclick="location.href='album.html?id='+${album.id};" value="View real" />  
+                <input type="button" onclick="location.href='album.html?id='${album.id};" value="View real" />  
             </div>`
 }
 
@@ -76,6 +76,9 @@ update = (data) => {
 
 // delete
 remove = (id) => {
+
+    document.getElementById(id).remove();
+
     const settings = {
         method: 'delete',
         headers: {

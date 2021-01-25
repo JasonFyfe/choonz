@@ -9,7 +9,7 @@ trackTemplate = (track) => {
                 <h3>Duration: ${track.duration}</h3>
                 <h4>Lyrics: ${track.lyrics}</h4>  
                 <button onclick="remove(${track.id})">Delete</button>
-                <input type="button" onclick="location.href='track.html?id='+${track.id};" value="View real" />        
+                <input type="button" onclick="location.href='track.html?id='${track.id};" value="View real" />        
             </div>`
 
 }
@@ -18,11 +18,11 @@ trackTemplate = (track) => {
 create = () => {
 
     var nametrack = document.querySelector('#name');
-    var duration = document.querySelector('#furation');
+    var duration = document.querySelector('#duration');
     var lyrics = document.querySelector('#lyrics');
-    var albumid = document.querySelector('#albumid');
-    var genreid = document.querySelector('#genreid');
-    var playlistid = document.querySelector('#playlistid');
+    var albumid = document.querySelector('#albumId');
+    var genreid = document.querySelector('#genreId');
+    var playlistid = document.querySelector('#playlistId');
 
     let data = {
         "name": nametrack.value,

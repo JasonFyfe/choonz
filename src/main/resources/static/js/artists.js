@@ -7,7 +7,7 @@ artistTemplate = (artist) => {
                 <h1>${artist.id}</h1>    
                 <h2>${artist.name}</h2>
                 <button onclick="remove(${artist.id})">Delete</button>
-                <input type="button" onclick="location.href='artist.html?id='+${artist.id};" value="View real" />
+                <input type="button" onclick="location.href='artist.html?id='${artist.id};" value="View real" />
                 </div> 
             `
 }
