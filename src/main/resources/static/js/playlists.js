@@ -10,7 +10,7 @@ playlistTemplate = (playlist) => {
                 <h4>Artwork: ${playlist.artwork}</h4>
                 <h5>Tracks: ${playlist.tracks}</h5>
                 <button onclick="remove(${playlist.id})">Delete</button>
-                <input type="button" onclick="location.href='playlist.html?id='${playlist.id};" value="View real" />
+                <input type="button" onclick="location.href='playlist.html?id='+${playlist.id};" value="View real" />
                 </div>
             `
 
