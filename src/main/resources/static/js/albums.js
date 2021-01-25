@@ -14,12 +14,9 @@ fetch('http://localhost:8082/albums')
                 console.log(data._embedded.albums[0]);
 
                 document.getElementById("main").innerHTML = `
-
-          ${data._embedded.albums.map(albumTemplate).join('')}
-
-
-  
+                ${data._embedded.albums.map(albumTemplate).join('')}
   `
+
 
             });
         }
@@ -53,4 +50,53 @@ function deleteByid(id){
       
       
     }
+
+      
+    var namealbum = document.querySelector('#Name');
+    var track = document.querySelector('#Track');
+    var cover = document.querySelector('#Cover');
+
+
+    document.getElementById("create").onclick = function() {myFunction()};
+
+    function myFunction() {
+
+    
+        let data = {
+            "name" :  namealbum.value,
+            "track": track.value,
+            "cover": cover.value
+
+
+              
+          }
+          console.log("Data to post",data)         
+            console.log(namealbum.value);
+            console.log(track.value);
+            console.log(cover.value);
+            console.log("Data to post",data)
+            sendData(data)
+            
+  
+      }
+
+      function sendData(data){
+        fetch("http://localhost:8082/albums", {
+            method: 'post',
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            },
+            body:JSON.stringify(data)
+          })
+          .then(function (data) {
+            console.log('Request succeeded with JSON response', data);
+          })
+          .catch(function (error) {
+            console.log('Request failed', error);
+          });
+          location.reload()
+        }
+
+
+    
 
