@@ -19,7 +19,7 @@ import com.qa.choonz.rest.model.AlbumModel;
 import com.qa.choonz.service.AlbumService;
 
 @RestController
-@RequestMapping("/albums")
+@RequestMapping
 @CrossOrigin
 public class AlbumController {
 
@@ -30,27 +30,27 @@ public class AlbumController {
         super();
     }
 
-    @PostMapping
+    @PostMapping("/api/albums")
     public ResponseEntity<AlbumModel> create(@RequestBody Album album) {
         return new ResponseEntity<AlbumModel>(this.service.create(album), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/api/albums")
     public ResponseEntity<CollectionModel<AlbumModel>> findAll() {
         return new ResponseEntity<CollectionModel<AlbumModel>>(this.service.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/albums/{id}")
     public ResponseEntity<AlbumModel> findById(@PathVariable long id) {
         return new ResponseEntity<AlbumModel>(this.service.findById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/api/albums/{id}")
     public ResponseEntity<AlbumModel> update(@RequestBody Album album, @PathVariable long id) {
         return new ResponseEntity<AlbumModel>(this.service.update(album, id), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/albums/{id}")
     public ResponseEntity<AlbumModel> delete(@PathVariable long id) {
         return this.service.delete(id)
         		? new ResponseEntity<AlbumModel>(HttpStatus.NO_CONTENT)

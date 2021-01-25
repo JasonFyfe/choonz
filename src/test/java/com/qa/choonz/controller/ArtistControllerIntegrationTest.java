@@ -38,7 +38,7 @@ public class ArtistControllerIntegrationTest {
 	
 	private List<Album> albums = Collections.emptyList();
 	
-	private final String URI = "/artists";
+	private final String URI = "/api/artists";
 	
 	private final Artist TEST_ARTIST = new Artist(1L, "The Mountain Goats", albums);
 	

@@ -7,7 +7,6 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.stereotype.Component;
 
 import com.qa.choonz.persistence.domain.User;
-import com.qa.choonz.rest.controller.TrackController;
 import com.qa.choonz.rest.controller.UserController;
 import com.qa.choonz.rest.model.UserModel;
 

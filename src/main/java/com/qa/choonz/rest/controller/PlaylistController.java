@@ -19,7 +19,7 @@ import com.qa.choonz.rest.model.PlaylistModel;
 import com.qa.choonz.service.PlaylistService;
 
 @RestController
-@RequestMapping("/playlists")
+@RequestMapping
 @CrossOrigin
 public class PlaylistController {
 
@@ -30,27 +30,27 @@ public class PlaylistController {
         super();
     }
 
-    @PostMapping
+    @PostMapping("/api/playlists")
     public ResponseEntity<PlaylistModel> create(@RequestBody Playlist playlist) {
         return new ResponseEntity<PlaylistModel>(this.service.create(playlist), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/api/playlists")
     public ResponseEntity<CollectionModel<PlaylistModel>> findAll() {
         return new ResponseEntity<CollectionModel<PlaylistModel>>(this.service.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/playlists/{id}")
     public ResponseEntity<PlaylistModel> findById(@PathVariable long id) {
         return new ResponseEntity<PlaylistModel>(this.service.findById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/api/playlists/{id}")
     public ResponseEntity<PlaylistModel> update(@RequestBody Playlist playlist, @PathVariable long id) {
         return new ResponseEntity<PlaylistModel>(this.service.update(playlist, id), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/playlists/{id}")
     public ResponseEntity<PlaylistModel> delete(@PathVariable long id) {
         return this.service.delete(id)
         		? new ResponseEntity<PlaylistModel>(HttpStatus.NO_CONTENT)

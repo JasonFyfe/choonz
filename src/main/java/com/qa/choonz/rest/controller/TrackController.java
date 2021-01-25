@@ -19,7 +19,7 @@ import com.qa.choonz.rest.model.TrackModel;
 import com.qa.choonz.service.TrackService;
 
 @RestController
-@RequestMapping("/tracks")
+@RequestMapping
 @CrossOrigin
 public class TrackController {
 
@@ -30,27 +30,27 @@ public class TrackController {
         super();
     }
 
-    @PostMapping
+    @PostMapping("/api/tracks")
     public ResponseEntity<TrackModel> create(@RequestBody Track track) {
         return new ResponseEntity<TrackModel>(this.service.create(track), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/api/tracks")
     public ResponseEntity<CollectionModel<TrackModel>> findAll() {
         return new ResponseEntity<CollectionModel<TrackModel>>(this.service.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/tracks/{id}")
     public ResponseEntity<TrackModel> findById(@PathVariable long id) {
         return new ResponseEntity<TrackModel>(this.service.findById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/api/tracks/{id}")
     public ResponseEntity<TrackModel> update(@RequestBody Track track, @PathVariable long id) {
         return new ResponseEntity<TrackModel>(this.service.update(track, id), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/tracks/{id}")
     public ResponseEntity<TrackModel> delete(@PathVariable long id) {
         return this.service.delete(id)
         		? new ResponseEntity<TrackModel>(HttpStatus.NO_CONTENT)

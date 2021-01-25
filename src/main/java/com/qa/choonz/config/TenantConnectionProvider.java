@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
    Reuses the JDBC connection pool to serve all tenants, but before using the Connection,
    it alters it with the SET SCHEMA command to reference the schema named by the tenant identifier.*/
 
+@SuppressWarnings("serial")
 @Profile({"devmt", "prod"})
 @Component
 public class TenantConnectionProvider implements MultiTenantConnectionProvider {
@@ -55,7 +56,7 @@ public class TenantConnectionProvider implements MultiTenantConnectionProvider {
     }
 
     @Override
-    public boolean isUnwrappableAs(Class unwrapType) {
+    public boolean isUnwrappableAs(@SuppressWarnings("rawtypes") Class unwrapType) {
         return false;
     }
 
