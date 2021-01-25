@@ -1,31 +1,7 @@
 const URL = 'http://localhost:8082/playlists/'
 
-fetch(URL)
-    .then(
-        function (response) {
-            if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }
-
-
-            response.json().then(function (data) {
-                console.log(data);
-                console.log(data._embedded);
-                console.log(data._embedded.playlists);
-                console.log(data._embedded.playlists[0]);
-
-                document.getElementById("main").innerHTML =
-                    `${data._embedded.playlists.map(playlistTemplate).join('')}`
-            });
-        }
-    )
-    .catch(function (err) {
-        console.log('Fetch Error :-S', err);
-    });
-
-function playlistTemplate(playlist) {
+// template
+playlistTemplate = (playlist) => {
     return `
                 <div class ="playlist">
                 <h1>${playlist.id}</h1>    
@@ -41,7 +17,7 @@ function playlistTemplate(playlist) {
 }
 
 // create
-document.getElementById("create").onclick = function() {
+create = () => {
 
     let name = document.querySelector('#name').value;
     let description = document.querySelector('#description').value;
@@ -69,7 +45,25 @@ document.getElementById("create").onclick = function() {
             return;
         }
     })
-    .then(location.reload());
+    .then(read());
+}
+
+// read
+read = () => {
+
+    fetch(URL)
+    .then(response => {
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+            response.json().then(data => {
+                document.getElementById("main").innerHTML = 
+                    `${data._embedded.artists.map(artistTemplate).join('')}`
+            });
+        }
+    );
 }
 
 // update
@@ -101,5 +95,7 @@ remove = (id) => {
             return;
         }
     })
-    .then(location.reload());
+    .then(read());
 }
+
+window.onload = read();

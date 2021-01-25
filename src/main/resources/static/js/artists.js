@@ -1,29 +1,7 @@
 var URL = 'http://localhost:8082/artists/'
 
-fetch(URL)
-    .then(
-        function (response) {
-            if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }
-            response.json().then(function (data) {
-                console.log(data);
-                console.log(data._embedded);
-                console.log(data._embedded.artists);
-                console.log(data._embedded.artists[0]);
-
-                document.getElementById("main").innerHTML = 
-                    `${data._embedded.artists.map(artistTemplate).join('')}`
-            });
-        }
-    )
-    .catch(function (err) {
-        console.log('Fetch Error :-S', err);
-    });
-
-function artistTemplate(artist) {
+// template
+artistTemplate = (artist) => {
     return `
                 <div class ="artist">
                 <h1>${artist.id}</h1>    
@@ -34,7 +12,8 @@ function artistTemplate(artist) {
             `
 }
 
-document.getElementById("create").onclick = function() {
+// create
+create = () => {
 
     let name = document.querySelector('#name').value;
 
@@ -58,12 +37,35 @@ document.getElementById("create").onclick = function() {
             return;
         }
     })
-    .then(location.reload());
+    .then(read());
 }
 
+// read
+read = () => {
+
+    fetch(URL)
+    .then(response => {
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+            response.json().then(data => {
+                document.getElementById("main").innerHTML = 
+                    `${data._embedded.artists.map(artistTemplate).join('')}`
+            });
+        }
+    )
+    .catch(function (err) {
+        console.log('Fetch Error :-S', err);
+    });
+
+}
+
+// update
 update = (data) => {
     fetch(URL+id, {
-        method: 'update',
+        method: 'put',
         headers: {
           "Content-type": "application/json; charset=UTF-8"
         },
@@ -71,6 +73,7 @@ update = (data) => {
     })
 }
 
+// delete
 remove = (id) => {
 
     const settings = {
@@ -88,5 +91,7 @@ remove = (id) => {
             return;
         }
     })
-    .then(location.reload());
+    .then(read());
 }
+
+window.onload = read();
