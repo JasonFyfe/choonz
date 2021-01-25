@@ -53,7 +53,7 @@ read = () => {
                 return;
             }
             response.json().then(data => {
-                document.getElementById("main").innerHTML =
+                document.querySelector('#main').innerHTML =
                     `${data._embedded.albums.map(albumTemplate).join('')}`
             });
         }

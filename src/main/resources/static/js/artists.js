@@ -49,7 +49,7 @@ read = () => {
                 return;
             }
             response.json().then(data => {
-                document.getElementById("main").innerHTML =
+                document.querySelector('#main').innerHTML =
                     `${data._embedded.artists.map(artistTemplate).join('')}`
             });
         }

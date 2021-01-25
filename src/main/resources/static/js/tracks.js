@@ -1,7 +1,7 @@
 const URL = 'http://localhost:8082/tracks/'
 
 // template
-trackTenplate = (track) => {
+trackTemplate = (track) => {
     return `
             <div id="test" class ="tracks" tagName="testing">
                 <h1>${track.id}</h1>    
@@ -62,7 +62,7 @@ read = () => {
                 return;
             }
             response.json().then(data => {
-                document.getElementById("main").innerHTML =
+                document.querySelector('#main').innerHTML =
                     `${data._embedded.tracks.map(trackTemplate).join('')}`
             });
         }
