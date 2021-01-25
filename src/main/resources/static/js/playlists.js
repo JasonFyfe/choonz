@@ -11,7 +11,7 @@ playlistTemplate = (playlist) => {
                 <h5>Tracks: ${playlist.tracks}</h5>
                 <button onclick="remove(${playlist.id})">Delete</button>
                 <input type="button" onclick="location.href='playlist.html?id='+${playlist.id};" value="View real" />
-                </div> 
+                </div>
             `
 
 }
@@ -59,8 +59,8 @@ read = () => {
                 return;
             }
             response.json().then(data => {
-                document.getElementById("main").innerHTML = 
-                    `${data._embedded.artists.map(artistTemplate).join('')}`
+                document.querySelector('#main').innerHTML = 
+                    `${data._embedded.playlists.map(playlistTemplate).join('')}`
             });
         }
     );

@@ -14,7 +14,6 @@ artistTemplate = (artist) => {
 
 // create
 create = () => {
-
     let name = document.querySelector('#name').value;
 
     const data = {
@@ -42,7 +41,6 @@ create = () => {
 
 // read
 read = () => {
-
     fetch(URL)
     .then(response => {
             if (response.status !== 200) {
@@ -59,7 +57,6 @@ read = () => {
     .catch(function (err) {
         console.log('Fetch Error :-S', err);
     });
-
 }
 
 // update
@@ -75,7 +72,6 @@ update = (data) => {
 
 // delete
 remove = (id) => {
-
     const settings = {
         method: 'delete',
         headers: {
