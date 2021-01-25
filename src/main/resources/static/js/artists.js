@@ -1,4 +1,4 @@
-var URL = "http://localhost:8082/artists"
+var URL = 'http://localhost:8082/artists/'
 
 fetch(URL)
     .then(
@@ -28,7 +28,7 @@ function artistTemplate(artist) {
                 <div class ="artist">
                 <h1>${artist.id}</h1>    
                 <h2>${artist.name}</h2>
-                <button onclick="deleteByid(${artist.id})">Delete</button>
+                <button onclick="remove(${artist.id})">Delete</button>
                 <input type="button" onclick="location.href='artist.html?id='+${artist.id};" value="View real" />
                 </div> 
             `
@@ -36,14 +36,14 @@ function artistTemplate(artist) {
 
 document.getElementById("create").onclick = function() {
 
-    var firstname = document.querySelector('#First_Name').input;
+    let name = document.querySelector('#name').value;
 
     const data = {
-        "name": firstname
+        "name": name
     }
 
     const settings = {
-        method: 'POST',
+        method: 'post',
         headers: {
           "content-type": "application/json; charset=UTF-8"
         },
@@ -52,13 +52,13 @@ document.getElementById("create").onclick = function() {
 
     fetch(URL, settings)
     .then(response => {
-            if (response.status !== 201) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }
+        if (response.status !== 201) {
+            console.log('Looks like there was a problem. Status Code: ' +
+                response.status);
+            return;
         }
-    ).then(location.reload());
+    })
+    .then(location.reload());
 }
 
 update = (data) => {
@@ -72,10 +72,21 @@ update = (data) => {
 }
 
 remove = (id) => {
-    fetch(URL+id, {
+
+    const settings = {
         method: 'delete',
         headers: {
           "Content-type": "application/json; charset=UTF-8"
-        },
+        }
+    }
+
+    fetch(URL+id, settings)
+    .then(response => {
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' +
+                response.status);
+            return;
+        }
     })
+    .then(location.reload());
 }
