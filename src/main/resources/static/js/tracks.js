@@ -58,6 +58,50 @@ function deleteByid(id){
       
       
     }
+    
+    var nametrack = document.querySelector('#Name');
+    var duration = document.querySelector('#Duration');
+    var lyrics = document.querySelector('#Lyrics');
+    var albumid = document.querySelector('#albumid');
+    var genreid = document.querySelector('#genreid');
+    var playlistid = document.querySelector('#playlistid');
 
 
-//change array name from artists to tracks in spring 
+    document.getElementById("create").onclick = function() {myFunction()};
+
+    function myFunction() {
+
+    
+        let data = {
+            "name" :  nametrack.value,
+            "duration": duration.value,
+            "lyrics": lyrics.value,
+            "album": {
+                "id": albumid.value
+            }
+        }
+             
+          console.log("Data to post",data)         
+            console.log("Data to post",data)
+            sendData(data)
+            
+  
+      }
+
+      function sendData(data){
+        fetch("http://localhost:8082/tracks", {
+            method: 'post',
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            },
+            body:JSON.stringify(data)
+          })
+          .then(function (data) {
+            console.log('Request succeeded with JSON response', data);
+          })
+          .catch(function (error) {
+            console.log('Request failed', error);
+          });
+          location.reload()
+        }
+
