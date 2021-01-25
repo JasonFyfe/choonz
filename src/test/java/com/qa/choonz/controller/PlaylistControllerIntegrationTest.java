@@ -9,21 +9,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.hateoas.mediatype.MessageResolver;
-import org.springframework.hateoas.mediatype.hal.CurieProvider;
-import org.springframework.hateoas.mediatype.hal.Jackson2HalModule;
-import org.springframework.hateoas.server.core.EvoInflectorLinkRelationProvider;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.Track;
@@ -42,22 +36,11 @@ class PlaylistControllerIntegrationTest {
 	@Autowired
 	private PlaylistModelAssembler assembler;
 
-	private ObjectMapper mapper;
-
-	private final String URI = "/playlists";
+	private final String URI = "/api/playlists";
 
 	private List<Track> tracks = Collections.emptyList();
 
 	private final Playlist TEST_Playlist_1 = new Playlist(1L, "Sadbois", "whiny musics", "some url", tracks);
-
-	@BeforeEach
-	void setUp() {
-		this.mapper = new ObjectMapper();
-		this.mapper.registerModule(new Jackson2HalModule());
-		this.mapper.setHandlerInstantiator(new Jackson2HalModule.HalHandlerInstantiator(
-				new EvoInflectorLinkRelationProvider(), CurieProvider.NONE, MessageResolver.DEFAULTS_ONLY));
-		this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
-	}
 
 	@Test
 	void createTest() throws Exception {

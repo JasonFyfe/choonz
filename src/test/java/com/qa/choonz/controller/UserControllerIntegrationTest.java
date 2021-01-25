@@ -6,21 +6,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.hateoas.mediatype.MessageResolver;
-import org.springframework.hateoas.mediatype.hal.CurieProvider;
-import org.springframework.hateoas.mediatype.hal.Jackson2HalModule;
-import org.springframework.hateoas.server.core.EvoInflectorLinkRelationProvider;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.rest.assembler.UserModelAssembler;
@@ -39,20 +33,9 @@ public class UserControllerIntegrationTest {
 	@Autowired
 	private UserModelAssembler assembler;
 
-	private ObjectMapper mapper;
-
-	private final String URI = "/users";
+	private final String URI = "/api/users";
 
 	private final User TEST_USER_1 = new User(1L, "admin", "password");
-
-	@BeforeEach
-	void setUp() {
-		this.mapper = new ObjectMapper();
-		this.mapper.registerModule(new Jackson2HalModule());
-		this.mapper.setHandlerInstantiator(new Jackson2HalModule.HalHandlerInstantiator(
-				new EvoInflectorLinkRelationProvider(), CurieProvider.NONE, MessageResolver.DEFAULTS_ONLY));
-		this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
-	}
 
 	@Test
 	void createTest() throws Exception {

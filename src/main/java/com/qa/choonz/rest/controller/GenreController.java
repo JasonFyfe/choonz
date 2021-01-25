@@ -19,7 +19,7 @@ import com.qa.choonz.rest.model.GenreModel;
 import com.qa.choonz.service.GenreService;
 
 @RestController
-@RequestMapping("/genres")
+@RequestMapping
 @CrossOrigin
 public class GenreController {
 
@@ -30,27 +30,27 @@ public class GenreController {
         super();
     }
 
-    @PostMapping
+    @PostMapping("/api/genres")
     public ResponseEntity<GenreModel> create(@RequestBody Genre genre) {
         return new ResponseEntity<GenreModel>(this.service.create(genre), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/api/genres")
     public ResponseEntity<CollectionModel<GenreModel>> findAll() {
         return new ResponseEntity<CollectionModel<GenreModel>>(this.service.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/genres/{id}")
     public ResponseEntity<GenreModel> findById(@PathVariable long id) {
         return new ResponseEntity<GenreModel>(this.service.findById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/api/genres/{id}")
     public ResponseEntity<GenreModel> update(@RequestBody Genre genre, @PathVariable long id) {
         return new ResponseEntity<GenreModel>(this.service.update(genre, id), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/genres/{id}")
     public ResponseEntity<GenreModel> delete(@PathVariable long id) {
         return this.service.delete(id)
         		? new ResponseEntity<GenreModel>(HttpStatus.NO_CONTENT)

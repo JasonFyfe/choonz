@@ -18,7 +18,7 @@ import com.qa.choonz.rest.model.UserModel;
 import com.qa.choonz.service.UserService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping
 @CrossOrigin
 public class UserController {
 
@@ -28,27 +28,27 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/api/users")
     public ResponseEntity<UserModel> create(@RequestBody User user) {
     	return new ResponseEntity<UserModel>(this.service.create(user), HttpStatus.CREATED);
     }
     
-    @GetMapping
+    @GetMapping("/api/users")
     public ResponseEntity<CollectionModel<UserModel>> findAll() {
         return new ResponseEntity<CollectionModel<UserModel>>(this.service.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/users/{id}")
     public ResponseEntity<UserModel> findById(@PathVariable long id) {
         return new ResponseEntity<UserModel>(this.service.findById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/api/users/{id}")
     public ResponseEntity<UserModel> update(@RequestBody User user, @PathVariable long id) {
         return new ResponseEntity<UserModel>(this.service.update(user, id), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/users/{id}")
     public ResponseEntity<UserModel> delete(@PathVariable long id) {
         return this.service.delete(id)
         		? new ResponseEntity<UserModel>(HttpStatus.NO_CONTENT)
