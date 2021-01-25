@@ -1,4 +1,4 @@
-var URL = 'http://localhost:8082/artists/'
+const URL = 'http://localhost:8082/artists/'
 
 // template
 artistTemplate = (artist) => {
@@ -23,48 +23,48 @@ create = () => {
     const settings = {
         method: 'post',
         headers: {
-          "content-type": "application/json; charset=UTF-8"
+            "content-type": "application/json; charset=UTF-8"
         },
         body: JSON.stringify(data)
     }
 
     fetch(URL, settings)
-    .then(response => {
-        if (response.status !== 201) {
-            console.log('Looks like there was a problem. Status Code: ' +
-                response.status);
-            return;
-        }
-    })
-    .then(read());
+        .then(response => {
+            if (response.status !== 201) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+        })
+        .then(read());
 }
 
 // read
 read = () => {
     fetch(URL)
-    .then(response => {
+        .then(response => {
             if (response.status !== 200) {
                 console.log('Looks like there was a problem. Status Code: ' +
                     response.status);
                 return;
             }
             response.json().then(data => {
-                document.getElementById("main").innerHTML = 
+                document.getElementById("main").innerHTML =
                     `${data._embedded.artists.map(artistTemplate).join('')}`
             });
         }
-    )
-    .catch(function (err) {
-        console.log('Fetch Error :-S', err);
-    });
+        )
+        .catch(function (err) {
+            console.log('Fetch Error :-S', err);
+        });
 }
 
 // update
 update = (data) => {
-    fetch(URL+id, {
+    fetch(URL + id, {
         method: 'put',
         headers: {
-          "Content-type": "application/json; charset=UTF-8"
+            "Content-type": "application/json; charset=UTF-8"
         },
         body: JSON.stringify(data)
     })
@@ -75,19 +75,19 @@ remove = (id) => {
     const settings = {
         method: 'delete',
         headers: {
-          "Content-type": "application/json; charset=UTF-8"
+            "Content-type": "application/json; charset=UTF-8"
         }
     }
 
-    fetch(URL+id, settings)
-    .then(response => {
-        if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-                response.status);
-            return;
-        }
-    })
-    .then(read());
+    fetch(URL + id, settings)
+        .then(response => {
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+        })
+        .then(read());
 }
 
 window.onload = read();

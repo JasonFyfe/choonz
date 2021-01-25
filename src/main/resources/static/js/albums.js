@@ -1,18 +1,16 @@
-var URL = 'http://localhost:8082/albums/'
+const URL = 'http://localhost:8082/albums/'
 
 // template
 albumTemplate = (album) => {
     return `
-              <div class ="album">
-                  <h1>${album.id}</h1>    
-                  <h2>${album.name}</h2>
-                  <h4>Tracks: ${album.tracks}</h4>
-                  <p>Cover: ${album.cover}</p>
-                  <button onclick="deleteByid(${album.id})">Delete</button>
-                  <input type="button" onclick="location.href='album.html?id='+${album.id};" value="View real" />  
-              </div> 
-           `
-
+            <div class ="album">
+                <h1>${album.id}</h1>    
+                <h2>${album.name}</h2>
+                <h4>Tracks: ${album.tracks}</h4>
+                <p>Cover: ${album.cover}</p>
+                <button onclick="remove(${album.id})">Delete</button>
+                <input type="button" onclick="location.href='album.html?id='+${album.id};" value="View real" />  
+            </div>`
 }
 
 // create
@@ -22,55 +20,55 @@ create = () => {
     const cover = document.querySelector('#cover').value;
 
     const data = {
-      "name" :  name,
-      "cover": cover
+        "name": name,
+        "cover": cover
     }
 
     const settings = {
         method: 'post',
         headers: {
-          "content-type": "application/json; charset=UTF-8"
+            "content-type": "application/json; charset=UTF-8"
         },
         body: JSON.stringify(data)
     }
 
     fetch(URL, settings)
-    .then(response => {
-        if (response.status !== 201) {
-            console.log('Looks like there was a problem. Status Code: ' +
-                response.status);
-            return;
-        }
-    })
-    .then(read());
+        .then(response => {
+            if (response.status !== 201) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+        })
+        .then(read());
 }
 
 // read
 read = () => {
     fetch(URL)
-    .then(response => {
+        .then(response => {
             if (response.status !== 200) {
                 console.log('Looks like there was a problem. Status Code: ' +
                     response.status);
                 return;
             }
             response.json().then(data => {
-                document.getElementById("main").innerHTML = 
+                document.getElementById("main").innerHTML =
                     `${data._embedded.albums.map(albumTemplate).join('')}`
             });
         }
-    )
-    .catch(function (err) {
-        console.log('Fetch Error :-S', err);
-    });
+        )
+        .catch(function (err) {
+            console.log('Fetch Error :-S', err);
+        });
 }
 
 // update
 update = (data) => {
-    fetch(URL+id, {
+    fetch(URL + id, {
         method: 'put',
         headers: {
-          "Content-type": "application/json; charset=UTF-8"
+            "Content-type": "application/json; charset=UTF-8"
         },
         body: JSON.stringify(data)
     })
@@ -81,23 +79,23 @@ remove = (id) => {
     const settings = {
         method: 'delete',
         headers: {
-          "Content-type": "application/json; charset=UTF-8"
+            "Content-type": "application/json; charset=UTF-8"
         }
     }
 
-  fetch(URL+id, settings)
-  .then(response => {
-      if (response.status !== 200) {
-          console.log('Looks like there was a problem. Status Code: ' +
-              response.status);
-          return;
-      }
-  })
-  .then(read());
+    fetch(URL + id, settings)
+        .then(response => {
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+        })
+        .then(read());
 }
 
 window.onload = read();
 
 
-    
+
 

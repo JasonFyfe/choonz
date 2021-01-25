@@ -32,46 +32,46 @@ create = () => {
     const settings = {
         method: 'post',
         headers: {
-          "content-type": "application/json; charset=UTF-8"
+            "content-type": "application/json; charset=UTF-8"
         },
         body: JSON.stringify(data)
     }
 
     fetch(URL, settings)
-    .then(response => {
-        if (response.status !== 201) {
-            console.log('Looks like there was a problem. Status Code: ' +
-                response.status);
-            return;
-        }
-    })
-    .then(read());
+        .then(response => {
+            if (response.status !== 201) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+        })
+        .then(read());
 }
 
 // read
 read = () => {
 
     fetch(URL)
-    .then(response => {
+        .then(response => {
             if (response.status !== 200) {
                 console.log('Looks like there was a problem. Status Code: ' +
                     response.status);
                 return;
             }
             response.json().then(data => {
-                document.querySelector('#main').innerHTML = 
+                document.querySelector('#main').innerHTML =
                     `${data._embedded.playlists.map(playlistTemplate).join('')}`
             });
         }
-    );
+        );
 }
 
 // update
 update = (data) => {
-    fetch(URL+id, {
+    fetch(URL + id, {
         method: 'put',
         headers: {
-          "Content-type": "application/json; charset=UTF-8"
+            "Content-type": "application/json; charset=UTF-8"
         },
         body: JSON.stringify(data)
     })
@@ -83,19 +83,19 @@ remove = (id) => {
     const settings = {
         method: 'delete',
         headers: {
-          "Content-type": "application/json; charset=UTF-8"
+            "Content-type": "application/json; charset=UTF-8"
         }
     }
 
-    fetch(URL+id, settings)
-    .then(response => {
-        if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-                response.status);
-            return;
-        }
-    })
-    .then(read());
+    fetch(URL + id, settings)
+        .then(response => {
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+        })
+        .then(read());
 }
 
 window.onload = read();
