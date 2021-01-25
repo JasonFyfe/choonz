@@ -39,6 +39,7 @@ function artistTemplate(artist) {
                 <h3>Duration: ${artist.duration}</h3>
                 <h4>Lyrics: ${artist.lyrics}</h4>  
                 <button onclick="deleteByid(${artist.id})">Delete</button>
+                <input type="button" onclick="location.href='track.html?id='+${artist.id};" value="View real" />
                 
                        
                 </div> 

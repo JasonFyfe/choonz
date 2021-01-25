@@ -8,7 +8,7 @@ for(let param of params ){
 }
 
 function getData(id){
-    fetch('http://localhost:8082/api/tracks/'+id)
+    fetch('http://localhost:8082/tracks/'+id)
       .then(
         function(response) {
           if (response.status !== 200) {
@@ -22,7 +22,7 @@ function getData(id){
             
 
             document.getElementById("main").innerHTML =  `
-                    <div class ="tracksone">
+                    <div class ="trackone">
                     <h1>${data.id}</h1>    
                     <h2>${data.name}</h2>
                     <h3>Duration: ${data.duration}</h3>
@@ -42,7 +42,7 @@ function getData(id){
 
 
     function deleteByid(id){
-        fetch("http://localhost:8082/api/tracks/"+id, {
+        fetch("http://localhost:8082/tracks/"+id, {
             method: 'delete',
             headers: {
               "Content-type": "application/json; charset=UTF-8"
