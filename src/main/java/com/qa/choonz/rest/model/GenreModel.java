@@ -7,7 +7,6 @@ import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.qa.choonz.persistence.domain.Track;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +25,5 @@ public class GenreModel extends RepresentationModel<GenreModel>{
 	private Long id;
 	private String name;
 	private String description;
-	private List<Track> tracks;
+	private List<TrackModel> tracks;
 }
