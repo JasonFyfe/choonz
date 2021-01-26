@@ -1,4 +1,4 @@
-const URL = 'http://localhost:8082/tracks/'
+const URL = 'http://localhost:8082/api/tracks/'
 
 // template
 trackTemplate = (track) => {
@@ -28,9 +28,15 @@ create = () => {
         "name": nametrack,
         "duration": duration,
         "lyrics": lyrics,
-        // "album": {
-        //     "id": albumid.value
-        // }
+        "album": {
+            "id": albumid.value
+        },
+        "genre": {
+            "id": genreid.value
+        },
+        "playlist": {
+            "id": playlistid.value
+        }
     }
 
     const settings = {
@@ -63,7 +69,7 @@ read = () => {
             }
             response.json().then(data => {
                 document.querySelector('#main').innerHTML =
-                    `${data._embedded.artists.map(trackTemplate).join('')}`
+                    `${data._embedded.tracks.map(trackTemplate).join('')}`
             });
         }
         )

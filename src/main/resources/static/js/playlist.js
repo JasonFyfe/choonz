@@ -75,7 +75,7 @@ function getData(id){
       }
 
       function sendData(data, id){
-        fetch("http://localhost:8082/playlists/"+ id, {
+        fetch("http://localhost:8082/api/playlists/"+ id, {
             method: 'put',
             headers: {
               "Content-type": "application/json; charset=UTF-8"

@@ -1,4 +1,4 @@
-const URL = 'http://localhost:8082/artists/'
+const URL = 'http://localhost:8082/api/artists/'
 
 // template
 artistTemplate = (artist) => {
@@ -61,16 +61,16 @@ read = () => {
         });
 }
 
-// update
-update = (data) => {
-    fetch(URL + id, {
-        method: 'put',
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        },
-        body: JSON.stringify(data)
-    })
-}
+// // update
+// update = (data) => {
+//     fetch(URL + id, {
+//         method: 'put',
+//         headers: {
+//             "Content-type": "application/json; charset=UTF-8"
+//         },
+//         body: JSON.stringify(data)
+//     })
+// }
 
 // delete
 remove = (id) => {

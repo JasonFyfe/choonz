@@ -1,4 +1,4 @@
-const URL = 'http://localhost:8082/albums/'
+const URL = 'http://localhost:8082/api/albums/'
 
 // template
 albumTemplate = (album) => {
@@ -8,6 +8,7 @@ albumTemplate = (album) => {
                 <h2>${album.name}</h2>
                 <h4>Tracks: ${album.tracks}</h4>
                 <p>Cover: ${album.cover}</p>
+                <p>Artist: ${album.artist.name}</p>
                 <button onclick="remove(${album.id})">Delete</button>
                 <input type="button" onclick="location.href='album.html?id='+${album.id};" value="View real" />  
             </div>`
@@ -18,10 +19,14 @@ create = () => {
 
     const name = document.querySelector('#name').value;
     const cover = document.querySelector('#cover').value;
+    const artistid = document.querySelector('#artistid').value;
 
     const data = {
         "name": name,
-        "cover": cover
+        "cover": cover,
+        "artist": {
+            "id": artistid
+        }
     }
 
     const settings = {

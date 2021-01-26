@@ -8,7 +8,7 @@ for(let param of params ){
 }
 
 function getData(id){
-    fetch('http://localhost:8082/artists/'+id)
+    fetch('http://localhost:8082/api/artists/'+id)
       .then(
         function(response) {
           if (response.status !== 200) {
@@ -62,7 +62,7 @@ function getData(id){
       }
 
       function sendData(data, id){
-        fetch("http://localhost:8082/artists/"+ id, {
+        fetch("http://localhost:8082/api/artists/"+ id, {
             method: 'put',
             headers: {
               "Content-type": "application/json; charset=UTF-8"
@@ -80,7 +80,7 @@ function getData(id){
 
 
     function deleteByid(id){
-        fetch("http://localhost:8082/artists/"+id, {
+        fetch("http://localhost:8082/api/artists/"+id, {
             method: 'delete',
             headers: {
               "Content-type": "application/json; charset=UTF-8"

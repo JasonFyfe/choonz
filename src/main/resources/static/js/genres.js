@@ -1,4 +1,4 @@
-    const URL = 'http://localhost:8082/genres/'
+    const URL = 'http://localhost:8082/api/genres/'
 
     // template
     genreTemplate = (genre) => {

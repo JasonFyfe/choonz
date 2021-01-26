@@ -8,7 +8,7 @@ for (let param of params) {
 }
 
 function getData(id) {
-    fetch('http://localhost:8082/albums/' + id)
+    fetch('http://localhost:8082/api/albums/' + id)
         .then(
             function (response) {
                 if (response.status !== 200) {
@@ -28,7 +28,7 @@ function getData(id) {
                 <div class ="albumone">
                 <h1>${data.id}</h1>    
                 <h2>${data.name}</h2>
-                <h4>Tracks: ${data.tracks}</h4>
+                <h4>Tracks: ${data.tracks[0].name}</h4>
                 <p>Cover: ${data.cover}</p>
                 <button onclick="deleteByid(${data.id})">Delete</button>
                 
@@ -71,7 +71,7 @@ function getData(id) {
       }
 
       function sendData(data, id){
-        fetch("http://localhost:8082/albums/"+ id, {
+        fetch("http://localhost:8082/api/albums/"+ id, {
             method: 'put',
             headers: {
               "Content-type": "application/json; charset=UTF-8"
@@ -88,7 +88,7 @@ function getData(id) {
         }
 
 function deleteByid(id) {
-    fetch("http://localhost:8082/albums/" + id, {
+    fetch("http://localhost:8082/api/albums/" + id, {
         method: 'delete',
         headers: {
             "Content-type": "application/json; charset=UTF-8"

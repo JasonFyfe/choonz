@@ -1,4 +1,4 @@
-const URL = 'http://localhost:8082/playlists/'
+const URL = 'http://localhost:8082/api/playlists/'
 
 // template
 playlistTemplate = (playlist) => {
