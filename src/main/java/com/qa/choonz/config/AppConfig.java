@@ -37,13 +37,7 @@ public class AppConfig {
                 registry.addMapping("/**").allowedMethods("*");
             }
         };
-    }
-    
-    @Bean
-    public PasswordEncoder getPasswordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-    
+    }   
 
     @Bean
     @Profile("devst")
@@ -56,9 +50,6 @@ public class AppConfig {
     {
     	return args ->
     	{
-    		// Users
-    		log.info("Preloading " + userRepo.save(new User(1L, "admin", "password")));
-    		log.info("Preloading " + userRepo.save(new User(2L, "user", "password")));
     		// Artists
     		log.info("Preloading " + artistRepo.save(new Artist(1L, "The Mountain Goats", null)));
     		log.info("Preloading " + artistRepo.save(new Artist(2L, "We Were Promised Jetpacks", null)));

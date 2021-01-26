@@ -8,7 +8,8 @@ create table album (
 	id bigint auto_increment,
 	cover varchar(255),
 	name varchar(100) not null unique,
-	artist_id bigint, primary key (id),
+	artist_id bigint,
+	primary key (id),
 	foreign key (artist_id) references artist
 );
 
@@ -29,7 +30,8 @@ create table playlist (
 
 create table track (
 	id bigint auto_increment,
-	duration integer not null, lyrics varchar(255),
+	duration integer not null, 
+	lyrics varchar(255),
 	name varchar(100) not null unique, 
 	album_id bigint,
 	genre_id bigint,

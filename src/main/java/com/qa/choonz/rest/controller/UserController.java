@@ -1,5 +1,6 @@
 package com.qa.choonz.rest.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +23,8 @@ import com.qa.choonz.service.UserService;
 @CrossOrigin
 public class UserController {
 
+	@Autowired
     private UserService service;
-
-    public UserController(UserService service) {
-        this.service = service;
-    }
 
     @PostMapping("/api/users")
     public ResponseEntity<UserModel> create(@RequestBody User user) {

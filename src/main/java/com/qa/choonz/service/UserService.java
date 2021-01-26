@@ -4,23 +4,20 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.qa.choonz.exception.TrackNotFoundException;
+import com.qa.choonz.exception.UserNotFoundException;
 import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.persistence.repository.UserRepository;
 import com.qa.choonz.rest.assembler.UserModelAssembler;
 import com.qa.choonz.rest.model.UserModel;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 	
 	@Autowired
-	private UserRepository repo;
+    private UserRepository repo;
 	
 	@Autowired
 	private UserModelAssembler userModelAssembler;
@@ -43,11 +40,15 @@ public class UserService implements UserDetailsService {
     }
     
     public UserModel findById(long id) {
-    	return this.userModelAssembler.toModel(this.repo.findById(id).orElseThrow(TrackNotFoundException::new));
+    	return this.userModelAssembler.toModel(this.repo.findById(id).orElseThrow(UserNotFoundException::new));
+    }
+    
+    public UserModel findByUsername(String username) {
+    	return this.userModelAssembler.toModel(this.repo.findByUsername(username).orElseThrow(UserNotFoundException::new));
     }
     
     public UserModel update(User user, long id) {
-        User entity = this.repo.findById(id).orElseThrow(TrackNotFoundException::new);
+        User entity = this.repo.findById(id).orElseThrow(UserNotFoundException::new);
         entity.setUsername(user.getUsername());
         entity.setPassword(user.getPassword());
         return this.userModelAssembler.toModel(this.repo.save(entity));
@@ -57,11 +58,4 @@ public class UserService implements UserDetailsService {
         this.repo.deleteById(id);
         return !this.repo.existsById(id);
     }
-    
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    	return repo.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with the specified username is not found"));
-    }
-
 }
