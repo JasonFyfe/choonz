@@ -20,7 +20,7 @@ public class UserService {
     private UserRepository repo;
 	
 	@Autowired
-	private UserModelAssembler userModelAssembler;
+	private UserModelAssembler assembler;
 	
 	@Autowired
     private PasswordEncoder encoder;
@@ -32,26 +32,26 @@ public class UserService {
     public UserModel create(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         tenantService.initDatabase(user.getUsername());
-        return this.userModelAssembler.toModel(repo.save(user));
+        return this.assembler.toModel(repo.save(user));
     }
     
     public CollectionModel<UserModel> findAll() {
-    	return this.userModelAssembler.toCollectionModel(this.repo.findAll());
+    	return this.assembler.toCollectionModel(this.repo.findAll());
     }
     
     public UserModel findById(long id) {
-    	return this.userModelAssembler.toModel(this.repo.findById(id).orElseThrow(UserNotFoundException::new));
+    	return this.assembler.toModel(this.repo.findById(id).orElseThrow(UserNotFoundException::new));
     }
     
     public UserModel findByUsername(String username) {
-    	return this.userModelAssembler.toModel(this.repo.findByUsername(username).orElseThrow(UserNotFoundException::new));
+    	return this.assembler.toModel(this.repo.findByUsername(username).orElseThrow(UserNotFoundException::new));
     }
     
     public UserModel update(User user, long id) {
         User entity = this.repo.findById(id).orElseThrow(UserNotFoundException::new);
         entity.setUsername(user.getUsername());
         entity.setPassword(user.getPassword());
-        return this.userModelAssembler.toModel(this.repo.save(entity));
+        return this.assembler.toModel(this.repo.save(entity));
     }
     
     public boolean delete(long id) {

@@ -1,9 +1,11 @@
-const URL = "localhost:8082/api/users"
+const URL = 'http://localhost:8082/users';
 
 //create
 create = () => {
 
-    const usernamne = document.querySelector('#username').value;
+    console.log(URL);
+
+    const username = document.querySelector('#username').value;
     const password = document.querySelector('#password').value;
 
     const data = {
@@ -27,5 +29,4 @@ create = () => {
                 return;
             }
         })
-        .then(read());
 }

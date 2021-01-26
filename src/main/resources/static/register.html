@@ -6,12 +6,17 @@
     <title>Register</title>
 </head>
 <body>
-    <form>
-        <label for="username">Username:</label>
-        <input id="username"></input>
-        <label for="password">Password:</label>
-        <input id="password"></input>
-        <button type="submit">Register</button>
+    
+    <form action="/" method="POST">
+        <input id="username" type="text"/>
+        <span id="usernameError" style="display:none"></span>
+     
+        <input id="password" type="text"/>
+        <span id="passwordError" style="display:none"></span>
+     
+        <a href="" onclick="create()">submit</a>
     </form>
+
+    <script src="js/register.js"></script>
 </body>
 </html>
