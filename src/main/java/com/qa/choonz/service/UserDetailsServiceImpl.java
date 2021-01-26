@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.qa.choonz.exception.UserNotFoundException;
 import com.qa.choonz.persistence.domain.Role;
 import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.persistence.repository.UserRepository;
@@ -24,9 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	
-    	User user = repo.findByUsername(username);
-    	
-    	if (user == null) throw new UsernameNotFoundException(username);
+    	User user = repo.findByUsername(username).orElseThrow(UserNotFoundException::new);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for (Role role : user.getRoles()){
