@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Relation(itemRelation = "artist", collectionRelation = "artists")
+@Relation(itemRelation = "track", collectionRelation = "tracks")
 @JsonInclude(Include.NON_NULL)
 public class TrackModel extends RepresentationModel<TrackModel>{
 	private long id;
