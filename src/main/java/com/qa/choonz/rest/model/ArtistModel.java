@@ -7,7 +7,6 @@ import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.qa.choonz.persistence.domain.Album;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,5 +24,5 @@ import lombok.NoArgsConstructor;
 public class ArtistModel extends RepresentationModel<ArtistModel>{
 	private Long id;
 	private String name;
-	private List<Album> albums;
+	private List<AlbumModel> albums;
 }
