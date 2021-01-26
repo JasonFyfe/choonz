@@ -6,6 +6,7 @@ artistTemplate = (artist) => {
                 <div class ="artist">
                 <h1>${artist.id}</h1>    
                 <h2>${artist.name}</h2>
+                <h3>Albums: ${artist.albums}</h3>
                 <button onclick="remove(${artist.id})">Delete</button>
                 <input type="button" onclick="location.href='artist.html?id='+${artist.id};" value="View real" />
                 </div> 
@@ -49,6 +50,7 @@ read = () => {
                 return;
             }
             response.json().then(data => {
+                console.log(data)
                 document.querySelector('#main').innerHTML =
                     `${data._embedded.artists.map(artistTemplate).join('')}`
             });
