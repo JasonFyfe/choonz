@@ -18,7 +18,11 @@ function getData(id){
           }
           response.json().then(function (data) {
             console.log(data);
-
+            document.querySelector("input#id").value = data.id;
+                  
+            document.querySelector("input#name").value = data.name;
+            document.querySelector("input#duration").value = data.duration;
+            document.querySelector("input#lyrics").value = data.lyrics;
             
 
             document.getElementById("main").innerHTML =  `
@@ -39,6 +43,49 @@ function getData(id){
         console.log('Fetch Error :-S', err);
       });
     }
+
+    document.getElementById("update").onclick = function() {myFunction()};
+
+    function myFunction() {
+        var id = document.querySelector('#id').value;
+        var nametrack = document.querySelector('#name');
+        var duration = document.querySelector('#duration');
+        var lyrics = document.querySelector('#lyrics');
+
+        let data = {
+            "name" :  nametrack.value,
+            "duration": duration.value,
+            "lyrics": lyrics.value
+
+
+              
+          }
+          console.log("Data to post",data)   
+          console.log(id)     
+            console.log(nametrack.value);
+            console.log("Data to post",data)
+            sendData(data, id)
+            
+  
+      }
+
+      function sendData(data, id){
+        fetch("http://localhost:8082/tracks/"+ id, {
+            method: 'put',
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            },
+            body:JSON.stringify(data)
+          })
+          .then(function (data) {
+            console.log('Request succeeded with JSON response', data);
+          })
+          .catch(function (error) {
+            console.log('Request failed', error);
+          });
+          //location.reload()
+        }
+
 
 
     function deleteByid(id){

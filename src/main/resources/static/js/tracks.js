@@ -17,20 +17,20 @@ trackTemplate = (track) => {
 // create
 create = () => {
 
-    var nametrack = document.querySelector('#name');
-    var duration = document.querySelector('#duration');
-    var lyrics = document.querySelector('#lyrics');
+    var nametrack = document.querySelector('#name').value;
+    var duration = document.querySelector('#duration').value;
+    var lyrics = document.querySelector('#lyrics').value;
     var albumid = document.querySelector('#albumId');
     var genreid = document.querySelector('#genreId');
     var playlistid = document.querySelector('#playlistId');
 
-    let data = {
-        "name": nametrack.value,
-        "duration": duration.value,
-        "lyrics": lyrics.value,
-        "album": {
-            "id": albumid.value
-        }
+    const data = {
+        "name": nametrack,
+        "duration": duration,
+        "lyrics": lyrics,
+        // "album": {
+        //     "id": albumid.value
+        // }
     }
 
     const settings = {
