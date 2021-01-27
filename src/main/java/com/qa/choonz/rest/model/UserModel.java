@@ -1,5 +1,7 @@
 package com.qa.choonz.rest.model;
 
+import java.util.List;
+
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,5 +24,6 @@ public class UserModel extends RepresentationModel<UserModel> {
 	private Long id;
 	private String username;
 	private String password;
+	private List<String> roles;
 
 }

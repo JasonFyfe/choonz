@@ -40,11 +40,10 @@ public class AppConfig {
     }
     
     @Bean
-    public PasswordEncoder getPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
     
-
     @Bean
     @Profile("devst")
     CommandLineRunner initDatabase(ArtistRepository artistRepo,
@@ -56,9 +55,6 @@ public class AppConfig {
     {
     	return args ->
     	{
-    		// Users
-    		log.info("Preloading " + userRepo.save(new User(1L, "admin", "password")));
-    		log.info("Preloading " + userRepo.save(new User(2L, "user", "password")));
     		// Artists
     		log.info("Preloading " + artistRepo.save(new Artist(1L, "The Mountain Goats", null)));
     		log.info("Preloading " + artistRepo.save(new Artist(2L, "We Were Promised Jetpacks", null)));

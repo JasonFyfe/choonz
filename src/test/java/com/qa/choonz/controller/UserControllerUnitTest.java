@@ -5,6 +5,7 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.qa.choonz.config.SingleTenantTest;
+import com.qa.choonz.persistence.domain.Role;
 import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.rest.assembler.UserModelAssembler;
 import com.qa.choonz.rest.controller.UserController;
@@ -32,8 +34,9 @@ public class UserControllerUnitTest {
 	@Autowired
 	private UserModelAssembler assembler;
 	
-	private final User TEST_USER_1 = new User(1L, "admin", "password");
-	private final User TEST_USER_2 = new User(2L, "user", "password");
+	Role userRole = new Role(1l, "ROLE_USER", null);
+	User TEST_USER_1 = new User(1l, "user1", "password", Arrays.asList(userRole));
+	User TEST_USER_2 = new User(2l, "user2", "password", Arrays.asList(userRole));
 	
 	private final List<User> LISTOFUSER = List.of(TEST_USER_1, TEST_USER_2);
 
