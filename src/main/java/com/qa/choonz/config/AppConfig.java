@@ -37,8 +37,13 @@ public class AppConfig {
                 registry.addMapping("/**").allowedMethods("*");
             }
         };
-    }   
-
+    }
+    
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    
     @Bean
     @Profile("devst")
     CommandLineRunner initDatabase(ArtistRepository artistRepo,

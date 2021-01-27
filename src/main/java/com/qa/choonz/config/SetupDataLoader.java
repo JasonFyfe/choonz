@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -17,9 +18,9 @@ import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.persistence.repository.RoleRepository;
 import com.qa.choonz.persistence.repository.UserRepository;
 
+//@Profile({"devmt", "prod"})
 @Component
-public class SetupDataLoader implements
-  ApplicationListener<ContextRefreshedEvent> {
+public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     boolean alreadySetup = false;
 
