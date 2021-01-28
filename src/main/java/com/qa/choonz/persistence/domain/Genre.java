@@ -42,7 +42,6 @@ public class Genre implements Serializable {
 
     @NotNull
     @Size(max = 250)
-    @Column(unique = true)
     private String description;
 
     @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
