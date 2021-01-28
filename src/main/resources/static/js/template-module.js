@@ -46,7 +46,8 @@ const artistAlbumItem = (album) => {
 const track = (track) => {
     return `
     <div class="track"> 
-        <h1>${track.name}</h1>
+        <h1 id="albumID-${track.album.id}" class="albumID">${track.name}</h1>
+        <a href="./album.html?id=${track.album.id}"><h2>${track.album.name}</h2></a>
         <h3>Duration: ${track.duration}s</h3>
         <h4>Lyrics: ${track.lyrics}</h4>
         <button id="delete">Delete</button>
