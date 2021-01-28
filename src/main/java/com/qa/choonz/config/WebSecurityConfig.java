@@ -1,5 +1,14 @@
 package com.qa.choonz.config;
 
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +19,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
+import org.springframework.web.filter.GenericFilterBean;
 
 /* Secures all api enpoints, but opens the /user and h2-console (for dev purposes) */
 
@@ -30,6 +42,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager customAuthenticationManager() throws Exception {
         return authenticationManager();
     }
+    
+    class LoginPageFilter extends GenericFilterBean {
+		
+		@Override
+		public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+			if (SecurityContextHolder.getContext().getAuthentication() != null
+				  && SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
+				  && ((HttpServletRequest)request).getRequestURI().equals("/login")) {
+				System.out.println("user is authenticated but trying to access login page, redirecting to /");
+				((HttpServletResponse)response).sendRedirect("/");
+			}
+			chain.doFilter(request, response);
+		}
+		
+	}
 
 	@Autowired
 	public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
@@ -38,6 +65,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
+		http.addFilterBefore(
+				new LoginPageFilter(), DefaultLoginPageGeneratingFilter.class);
+		
 		http
 		.authorizeRequests()
         .antMatchers("/*").permitAll()
@@ -49,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf().disable()
         .headers().frameOptions().disable()
         	.and()
-        .formLogin()
+        .formLogin().defaultSuccessUrl("/html/welcome.html")
         	.and()
         .logout()
 			.permitAll();

@@ -114,7 +114,7 @@ const navbar = () => {
     <div>
         <ul>
             <li>
-                <a href="./../index.html">Home</a>
+                <a href="/html/welcome.html">Home</a>
             </li>
             <li>
                 <a href="/html/tracks.html">Tracks</a>
@@ -130,6 +130,9 @@ const navbar = () => {
             </li>
             <li>
                 <a href="/html/genres.html">Genres</a>
+            </li>
+            <li>
+                <a href="/logout">Logout</a>
             </li>
         </ul>
     </div>`;
