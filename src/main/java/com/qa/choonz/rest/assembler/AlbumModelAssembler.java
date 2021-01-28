@@ -67,6 +67,7 @@ public class AlbumModelAssembler extends RepresentationModelAssemblerSupport<Alb
 		return tracks.stream().map(track -> TrackModel.builder()
 				.id(track.getId())
 				.name(track.getName())
+				.duration(track.getDuration())
 				.build()
 				.add(linkTo(
 						methodOn(TrackController.class)

@@ -62,6 +62,7 @@ public class ArtistModelAssembler extends RepresentationModelAssemblerSupport<Ar
 		return albums.stream().map(album -> AlbumModel.builder()
 				.id(album.getId())
 				.name(album.getName())
+				.cover(album.getCover())
 				.build()
 				.add(linkTo(
 						methodOn(AlbumController.class)
