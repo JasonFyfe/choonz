@@ -64,15 +64,15 @@ INSERT INTO playlist (name, description, artwork)
 VALUES ('Bangers', 'Classic tunes to get you groovin''', 'https://via.placeholder.com/150');
 
 INSERT INTO track (name, duration, lyrics, album_id, genre_id, playlist_id)
-VALUES ('Spacetime', 338, 'I imagine myself large as the universe', 1, 1, 1);
+VALUES ('Spacetime', 338, 'I imagine myself large as the universe...', 1, 1, 1);
 INSERT INTO track (name, duration, lyrics, album_id, genre_id, playlist_id)
-VALUES ('Hold The Light', 289, 'Livin'' ain''t easy', 1, 1, 1);
+VALUES ('Hold The Light', 289, 'Livin'' ain''t easy...', 1, 1, 1);
 INSERT INTO track (name, duration, lyrics, album_id, genre_id, playlist_id)
-VALUES ('Love Worn Soul', 347, 'Oooooooooooo', 1, 1, 1);
+VALUES ('Love Worn Soul', 347, 'Oooooooooooo...', 1, 1, 1);
 
 INSERT INTO track (name, duration, lyrics, album_id, genre_id, playlist_id)
-VALUES ('Tired Games', 299, 'It gets darker as we walk your mind', 4, 2, 1);
+VALUES ('Tired Games', 299, 'It gets darker as we walk your mind...', 4, 2, 1);
 INSERT INTO track (name, duration, lyrics, album_id, genre_id, playlist_id)
-VALUES ('Bandelero Desperado', 238, 'This how I do my ting undisputed cinema slum king', 4, 2, 1);
+VALUES ('Bandelero Desperado', 238, 'This how I do my ting undisputed cinema slum king...', 4, 2, 1);
 INSERT INTO track (name, duration, lyrics, album_id, genre_id, playlist_id)
-VALUES ('Crazy Love', 280, 'I don''t know you as I should, no to be here talking, love love', 4, 2, 1);
+VALUES ('Crazy Love', 280, 'I don''t know you as I should, no to be here talking, love love...', 4, 2, 1);

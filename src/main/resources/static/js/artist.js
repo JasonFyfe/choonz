@@ -19,7 +19,7 @@ const read = async () => {
 }
 
 const update = async () => {
-  let name = document.querySelector("#name").value;
+  let name = document.querySelector("#artistName").value;
   let data = {
     "name": name
   };
