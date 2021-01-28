@@ -59,11 +59,11 @@ public class AppConfig {
     		log.info("Preloading " + artistRepo.save(new Artist(1L, "The Mountain Goats", null)));
     		log.info("Preloading " + artistRepo.save(new Artist(2L, "We Were Promised Jetpacks", null)));
     		// Albums
-    		log.info("Preloading " + albumRepo.save(new Album(1L, "We Shall All Be Healed", "some url", null, null)));
-    		log.info("Preloading " + albumRepo.save(new Album(2L, "Tallahassee", "some other url", null, null)));
-    		log.info("Preloading " + albumRepo.save(new Album(3L, "In League With Dragons", "some other other url", null, null)));
-    		log.info("Preloading " + albumRepo.save(new Album(4L, "The Sunset Tree", "and another", null, null)));
-    		log.info("Preloading " + albumRepo.save(new Album(5L, "These Four Walls", "and again!", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(1L, "We Shall All Be Healed", "https://via.placeholder.com/150", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(2L, "Tallahassee", "https://via.placeholder.com/151", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(3L, "In League With Dragons", "https://via.placeholder.com/152", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(4L, "The Sunset Tree", "https://via.placeholder.com/153", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(5L, "These Four Walls", "https://via.placeholder.com/154", null, null)));
     		// Tracks id, name, playlist, genre, duration, lyrics
     		log.info("Preloading " + trackRepo.save(new Track(1L, "Cotton", null, null, null, 360, "This song is for the rats...")));
     		log.info("Preloading " + trackRepo.save(new Track(2L, "Oceanographers Choice", null, null, null, 400, "WELL...")));
@@ -74,8 +74,8 @@ public class AppConfig {
     		log.info("Preloading " + genreRepo.save(new Genre(1L, "Indie Folk", "whiny-voiced white sadboi music", null)));
     		log.info("Preloading " + genreRepo.save(new Genre(2L, "Indie Rock and Roll", "straight bangers from your youth", null)));
     		// Playlists
-    		log.info("Preloading " + playlistRepo.save(new Playlist(1L, "Sadbois", "whiny musics", "some url", null)));
-    		log.info("Preloading " + playlistRepo.save(new Playlist(2L, "Happybois", "less whiny musics", "some other url", null)));
+    		log.info("Preloading " + playlistRepo.save(new Playlist(1L, "Sadbois", "whiny musics", "https://via.placeholder.com/160", null)));
+    		log.info("Preloading " + playlistRepo.save(new Playlist(2L, "Happybois", "less whiny musics", "https://via.placeholder.com/160", null)));
     	};
     }
 

@@ -9,33 +9,11 @@
 </head>
 
 <body>
+    <nav id="nav"></nav>
     <p>tracks</p>
-
-    <div class="form">
-
-        <label for="name">Name:</label>
-        <input id="name" type="text" />
-        <label for="duration">Duration:</label>
-        <input id="duration" type="text" />
-        <label for="lyrics">Lyrics:</label>
-        <input id="lyrics" type="text" />
-        <label for="albumid">Album ID:</label>
-        <input id="albumId" type="text" />
-        <label for="genre">Genre ID:</label>
-        <input id="genreId" type="text" />
-        <label for="playlistId">Playlist ID:</label>
-        <input id="playlistId" type="text" />
-        <button id="create" onClick="create()">Create</button>
-
-    </div>
-
+    <input id="search" type="text" placeholder="Search for a track...">
     <div id="main"></div>
-
-
-
-
-
-    <script src="../js/tracks.js"></script>
+    <script src="../js/tracks.js" type="module"></script>
 </body>
 
 </html>
