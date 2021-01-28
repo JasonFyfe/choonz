@@ -2,7 +2,22 @@ import * as crud from "./crud-module.js";
 const URL = 'http://localhost:8082/users'
 
 const create = async () => {
-    let data = await getData();
+    let data = getData();
     await crud.create(URL, data);
-    window.location.replace("/login");
+    window.location = 'http://localhost:8082/login';
 }
+
+function getData() {
+    
+    let username = document.querySelector('#username').value;
+    let password = document.querySelector('#password').value;
+
+    let data = {
+        "username": username,
+        "password": password
+    }
+
+    return data;
+} 
+
+document.querySelector('#create').addEventListener('click', create);

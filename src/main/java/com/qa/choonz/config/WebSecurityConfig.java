@@ -47,11 +47,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		@Override
 		public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+			String URI = ((HttpServletRequest)request).getRequestURI();	
+			System.out.println(URI);
+			
 			if (SecurityContextHolder.getContext().getAuthentication() != null
-				  && SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
-				  && ((HttpServletRequest)request).getRequestURI().equals("/login")) {
+					&& SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
+					&& (URI.equals("/") || URI.equals("/index.html") || URI.equals("/login") ||  URI.equals("/register.html"))) {
+				
 				System.out.println("user is authenticated but trying to access login page, redirecting to /");
-				((HttpServletResponse)response).sendRedirect("/");
+				((HttpServletResponse)response).sendRedirect("/html/welcome.html");
 			}
 			chain.doFilter(request, response);
 		}
@@ -70,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http
 		.authorizeRequests()
-        .antMatchers("/*").permitAll()
+		.antMatchers("/*").permitAll()
         .antMatchers("/api/**").hasRole("USER")
         .antMatchers("/static/**").authenticated()
         .antMatchers("/admin/**").hasRole("ADMIN")
