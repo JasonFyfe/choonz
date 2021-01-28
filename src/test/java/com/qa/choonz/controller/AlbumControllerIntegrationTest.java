@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.choonz.config.SingleTenantTest;
 import com.qa.choonz.persistence.domain.Album;
+import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.rest.assembler.AlbumModelAssembler;
 import com.qa.choonz.rest.model.AlbumModel;
@@ -37,17 +38,19 @@ public class AlbumControllerIntegrationTest {
 	@Autowired
 	private AlbumModelAssembler assembler;
 
+	private List<Album> albums = Collections.emptyList();
 	private List<Track> tracks = Collections.emptyList();
+	private Artist artist = new Artist(1L, "name", albums);
 
 	private final String URI = "/api/albums";
 
-	private final Album TEST_ALBUM_1 = new Album(1L, "We Shall All Be Healed", "some url", tracks, null);
+	private final Album TEST_ALBUM_1 = new Album(1L, "We Shall All Be Healed", "some url", tracks, artist);
 
 	@Test
 	void createTest() throws Exception {
 		AlbumModel testModel = this.assembler.toModel(TEST_ALBUM_1);
 		String testModelJson = this.jsonifier.writeValueAsString(testModel);
-
+		System.out.println(testModelJson);
 		RequestBuilder request = post(URI).contentType(MediaType.APPLICATION_JSON).content(testModelJson);
 
 		this.mvc.perform(request).andExpect(status().isCreated());

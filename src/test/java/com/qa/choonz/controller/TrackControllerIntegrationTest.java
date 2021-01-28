@@ -6,6 +6,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,6 +20,10 @@ import org.springframework.test.web.servlet.ResultMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.choonz.config.SingleTenantTest;
+import com.qa.choonz.persistence.domain.Album;
+import com.qa.choonz.persistence.domain.Artist;
+import com.qa.choonz.persistence.domain.Genre;
+import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.Track;
 import com.qa.choonz.rest.assembler.TrackModelAssembler;
 import com.qa.choonz.rest.model.TrackModel;
@@ -34,8 +42,15 @@ class TrackControllerIntegrationTest {
 	private TrackModelAssembler assembler;
 
 	private final String URI = "/api/tracks";
+	
+	private List<Track> tracks = Collections.emptyList();
+	private Artist artist = new Artist();
+	
+	private Album album = new Album(1L, "Album Name", "Album Cover", tracks, artist);
+	private Genre genre = new Genre(1L, "Genre Name", "Genre Description", tracks);
+	private Playlist playlist = new Playlist(1L, "Playlist Name", "Description", "Artwork", tracks);
 
-	private final Track TEST_TRACK_1 = new Track(1L, "Cotton", null, null, null, 360, "This song is for the rats...");
+	private final Track TEST_TRACK_1 = new Track(1L, "Cotton", album, playlist, genre, 360, "This song is for the rats...");
 
 	@Test
 	void createTest() throws Exception {
