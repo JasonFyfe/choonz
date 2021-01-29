@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -38,8 +39,9 @@ public class AlbumControllerIntegrationTest {
 	@Autowired
 	private AlbumModelAssembler assembler;
 
+	private Track track = new Track(1L, "name", null, null, null, 360, "lyrics");
 	private List<Album> albums = Collections.emptyList();
-	private List<Track> tracks = Collections.emptyList();
+	private List<Track> tracks = List.of(track);
 	private Artist artist = new Artist(1L, "name", albums);
 
 	private final String URI = "/api/albums";
@@ -47,6 +49,7 @@ public class AlbumControllerIntegrationTest {
 	private final Album TEST_ALBUM_1 = new Album(1L, "We Shall All Be Healed", "some url", tracks, artist);
 
 	@Test
+	@WithMockUser(value = "user", password = "password")
 	void createTest() throws Exception {
 		AlbumModel testModel = this.assembler.toModel(TEST_ALBUM_1);
 		String testModelJson = this.jsonifier.writeValueAsString(testModel);

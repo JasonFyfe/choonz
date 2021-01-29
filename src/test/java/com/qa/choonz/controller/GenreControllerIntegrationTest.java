@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,8 @@ public class GenreControllerIntegrationTest {
 	@Autowired
 	private GenreModelAssembler assembler;
 
-	private List<Track> tracks = Collections.emptyList();
+	private Track track = new Track(1L, "name", null, null, null, 350, "lyrics");
+	private List<Track> tracks = List.of(track);
 
 	private final String URI = "/api/genres";
 
