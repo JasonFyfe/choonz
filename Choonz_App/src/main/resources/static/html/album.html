@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Album</title>
+</head>
+<body>
+    <nav id="nav"></nav>
+    <div class="form">
+        <p>Update Album</p>
+        <label for="albumName">Name:</label>
+        <input id="albumName" type="text" />
+        <label for="albumCover">Cover:</label>
+        <input id="albumCover" type="text" /> 
+        <button id="updateAlbum">Update</button>
+    </div>
+    <hr>
+    <div class="form">
+        <p>Create Track</p>
+        <label for="trackName">Name:</label>
+        <input id="trackName" type="text">
+        <label for="trackDuration">Duration:</label>
+        <input id="trackDuration" type="text">
+        <label for="trackLyrics">Lyrics:</label>
+        <input id="trackLyrics" type="text" >
+        <label for="genre">Genre ID:</label>
+        <select id="genre">
+            <option value="null">No Genre</option>
+        </select>
+        <label for="playlist">Playlist ID:</label>
+        <select id="playlist">
+            <option value="null">No Playlist</option>
+        </select>
+        <button id="createTrack">Create</button>
+    </div>
+
+    <div id="main"></div>
+    <div id="tracks-container"></div>
+
+
+
+</body>
+<script src="../js/album.js" type="module" defer></script>
+</html>

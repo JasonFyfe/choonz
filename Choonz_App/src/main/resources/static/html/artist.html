@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Artist</title>
+</head>
+<body>
+    <nav id="nav"></nav>
+    <div class="form">
+        <p>Edit Artist</p>
+        <label for="artistName">Name:</label>
+        <input id="artistName" type="text" />
+        <button id="updateArtist">Update</button>
+    </div>
+
+    
+    <div class="form">
+        <p>Create an Album</p>
+        <label for="albumName">Name:</label>
+        <input id="albumName" type="text" />
+        <label for="albumCover">Cover URL:</label>
+        <input id="albumCover" type="text" />
+        <button id="createAlbum">Create</button>
+    </div>
+
+    <div id="main"></div>
+    <div id="albums-container"></div>
+
+    
+
+</body>
+<script src="../js/artist.js" type="module" defer></script>
+</html>
