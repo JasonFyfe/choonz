@@ -4,8 +4,6 @@
 
 A full stack web application augmented from the origin Choonz starter project. The backend was created using Spring Boot, Spring Security, Hibernate and Flyway. The fronted was built using simple HTML, CSS and vanilla Javascript.
 
-## Contents
-
 # Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
@@ -21,12 +19,17 @@ Development suite:
 
 ## Development environment setup
 A step by step of how to set up a development environment.
-#### Cloning the reposity
+#### Cloning the repository
 In your desired directory, run:
 ```
 git clone https://github.com/JasonFyfe/choonz.git
 ```
-### Running in Spring Tools Suite
+## Running the jar file
+Open the cloned directory in:
+```
+java -jar ./Builds/Choonz-0.0.1-SNAPSHOT.jar
+```
+### Running in Spring Tools Suite  
 #### Open project
 ```
 File > Open Projects from File System > Select 'Directory...' > Locate cloned directory > Choonz_App > Open
@@ -51,16 +54,8 @@ File > Open Projects from File System > Select 'Directory...' > Locate cloned di
 ```
 Right-click project > Run as... > JUnit Test
 ```
-
-## ERD
-
-TBD
-
-## UML
-
-TBD
-
 ## Authors
+Jacob Winkworth, Jason Fyfe, Malik ALi
 
 ### Training Team
 
@@ -81,4 +76,4 @@ TBD
 
 ## Acknowledgements
 
-- 
+- Special thanks to Ed for overseeing the project :)
