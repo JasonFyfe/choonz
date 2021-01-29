@@ -1,99 +1,92 @@
+import * as crud from "./crud-module.js";
+import * as template from "./template-module.js";
+import {navbar as navbar} from "./template-module.js";
+const URL = "http://localhost:8082/api/albums";
+const tracksURL = "http://localhost:8082/api/tracks";
+const genresURL = "http://localhost:8082/api/genres";
+const playlistsURL = "http://localhost:8082/api/playlists";
 const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
 
-for (let param of params) {
-    //console.log("here i am", param)
-    let id = param[1];
-    //console.log(id);
-    getData(id)
+const inputListeners = (data) => {
+    document.querySelector("#albumName").value = data.name;
+    document.querySelector("#albumCover").value = data.cover;
+    document.querySelector("#updateAlbum").addEventListener("click", update);
 }
 
-function getData(id) {
-    fetch('http://localhost:8082/albums/' + id)
-        .then(
-            function (response) {
-                if (response.status !== 200) {
-                    console.log('Looks like there was a problem. Status Code: ' +
-                        response.status);
-                    return;
-                }
-                response.json().then(function (data) {
-                    //console.log(data);
-                    
-                    document.querySelector("input#id").value = data.id;
-                  
-                    document.querySelector("input#name").value = data.name;
-                    document.querySelector("input#cover").value = data.cover;
+const populateDropDowns = async () => {
+    let genreSelect = document.querySelector("#genre");
+    let playlistSelect = document.querySelector("#playlist");
+    let genres = await crud.readAll(genresURL);
+    let playlists = await crud.readAll(playlistsURL);
 
-                document.getElementById("main").innerHTML = `
-                <div class ="albumone">
-                <h1>${data.id}</h1>    
-                <h2>${data.name}</h2>
-                <h4>Tracks: ${data.tracks}</h4>
-                <p>Cover: ${data.cover}</p>
-                <button onclick="deleteByid(${data.id})">Delete</button>
-                
-                </div> 
-                
-            `
-                });
-            }
-        )
-        .catch(function (err) {
-            console.log('Fetch Error :-S', err);
-        });
+    for(let genre of genres._embedded.genres) {
+        genreSelect.options[genreSelect.options.length] = new Option(genre.name, genre.id);
+    }
+    for(let playlist of playlists._embedded.playlists) {
+        playlistSelect.options[playlistSelect.options.length] = new Option(playlist.name, playlist.id);
+    }
 }
 
+const read = async () => {
+    document.querySelector("nav").insertAdjacentHTML("afterbegin", navbar());
+    populateDropDowns();
+    let model = await crud.readOne(URL, id);
+    inputListeners(model);
+    document.querySelector("#main").innerHTML = template.album(model);
+    document.querySelector("#delete").addEventListener("click", remove);
+    populateTracks(model.tracks);
+    document.querySelector("#createTrack").addEventListener("click", createTrack);
+}
 
-    document.getElementById("update").onclick = function() {myFunction()};
-
-    function myFunction() {
-        var id = document.querySelector('#id').value;
-        var namealbum = document.querySelector('#name');
-        var cover = document.querySelector('#cover');
-
-
-    
-        let data = {
-            "name" :  namealbum.value,
-            "cover": cover.value
-
-
-              
-          }
-          console.log("Data to post",data)   
-          console.log(id)     
-            console.log(namealbum.value);
-            console.log(cover.value);
-            console.log("Data to post",data)
-            sendData(data, id)
-            
-  
-      }
-
-      function sendData(data, id){
-        fetch("http://localhost:8082/albums/"+ id, {
-            method: 'put',
-            headers: {
-              "Content-type": "application/json; charset=UTF-8"
-            },
-            body:JSON.stringify(data)
-          })
-          .then(function (data) {
-            console.log('Request succeeded with JSON response', data);
-          })
-          .catch(function (error) {
-            console.log('Request failed', error);
-          });
-          //location.reload()
+const update = async () => {
+    let name = document.querySelector("#albumName").value;
+    let cover = document.querySelector("#albumCover").value;
+    let artistID = document.querySelector(".artistID").id.replace( /^\D+/g, '');
+    let data = {
+        "name": name,
+        "cover": cover,
+        "artist": {
+            "id": artistID
         }
-
-function deleteByid(id) {
-    fetch("http://localhost:8082/albums/" + id, {
-        method: 'delete',
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        },
-    })
-
-
+    };
+    await crud.update(URL, id, data);
+    location.reload();
 }
+
+const remove = async () => {
+    await crud.remove(URL, id);
+    window.location.replace("./albums.html");
+}
+
+const createTrack = async () => {
+    let trackName = document.querySelector("#trackName").value;
+    let trackDuration = document.querySelector("#trackDuration").value;
+    let trackLyrics = document.querySelector("#trackLyrics").value;
+    let genre = document.querySelector("#genre").value;
+    let playlist = document.querySelector("#playlist").value;
+
+    let data = {
+      "name": trackName,
+      "duration": trackDuration,
+      "lyrics": trackLyrics,
+      "album": {
+        "id": id
+      }
+    };
+    if (genre != "null") {
+        data["genre"] = { "id": genre}
+    }
+    if (playlist != "null") {
+        data["playlist"] = { "id": playlist}
+    }
+
+    await crud.create(tracksURL, data);
+    location.reload();
+  }
+
+const populateTracks = (tracks) => {
+    document.querySelector("#tracks-container").innerHTML = (`${tracks.map(template.shortTrackItem).join('')}`);
+}
+
+window.onload = read();

@@ -51,7 +51,7 @@ body {
     overflow: hidden;
   }
 
-  .trackone {
+  .track {
     max-width: 650px;
     padding: 20px;
     margin: 30px auto;
@@ -60,7 +60,7 @@ body {
     overflow: hidden;
   }
 
-  .albumone {
+  .album {
     max-width: 650px;
     padding: 20px;
     margin: 30px auto;
@@ -69,7 +69,7 @@ body {
     overflow: hidden;
   }
 
-  .artistone {
+  .artist {
     max-width: 650px;
     padding: 20px;
     margin: 30px auto;
@@ -78,7 +78,7 @@ body {
     overflow: hidden;
   }
 
-  .genreone {
+  .genre {
     max-width: 650px;
     padding: 20px;
     margin: 30px auto;
@@ -87,7 +87,7 @@ body {
     overflow: hidden;
   }
 
-  .playlistone {
+  .playlist {
     max-width: 650px;
     padding: 20px;
     margin: 30px auto;

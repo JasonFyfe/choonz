@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,8 @@ public class ArtistControllerIntegrationTest {
 	@Autowired
 	private ArtistModelAssembler assembler;
 	
-	private List<Album> albums = Collections.emptyList();
+	private Album album = new Album(1L, "name", "cover", null, null);
+	private List<Album> albums = List.of(album);
 	
 	private final String URI = "/api/artists";
 	

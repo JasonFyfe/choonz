@@ -1,101 +1,35 @@
-const URL = 'http://localhost:8082/playlists/'
+import * as crud from "./crud-module.js";
+import * as utils from "./utils.js";
+import {playlistListItem as template} from "./template-module.js";
+import {navbar as navbar} from "./template-module.js";
 
-// template
-playlistTemplate = (playlist) => {
-    return `
-                <div class ="playlist">
-                <h1>${playlist.id}</h1>    
-                <h2>${playlist.name}</h2>
-                <h3>Description: ${playlist.description}</h3>
-                <h4>Artwork: ${playlist.artwork}</h4>
-                <h5>Tracks: ${playlist.tracks}</h5>
-                <button onclick="remove(${playlist.id})">Delete</button>
-                <input type="button" onclick="location.href='playlist.html?id='+${playlist.id};" value="View real" />
-                </div>
-            `
+const URL = 'http://localhost:8082/api/playlists'
 
+const create = async () => {
+    let data = await getData();
+    await crud.create(URL, data);
+    location.reload();
 }
 
-// create
-create = () => {
+const read = async () => {
+    document.querySelector("nav").insertAdjacentHTML("afterbegin", navbar());
+    let model = await crud.readAll(URL);
+    document.querySelector('#main').innerHTML =  `${model._embedded.playlists.map(template).join('')}`
+}
 
-    let name = document.querySelector('#name').value;
-    let description = document.querySelector('#description').value;
-    let artwork = document.querySelector('#artwork').value;
+const getData = async () => {
+    const name = document.querySelector('#name').value;
+    const description = document.querySelector('#description').value;
+    const artwork = document.querySelector('#artwork').value;
 
     const data = {
         "name": name,
-        "description": description,
-        "artwork": artwork
+        "description": utils.nullable(description),
+        "artwork": utils.nullable(artwork)
     }
 
-    const settings = {
-        method: 'post',
-        headers: {
-            "content-type": "application/json; charset=UTF-8"
-        },
-        body: JSON.stringify(data)
-    }
-
-    fetch(URL, settings)
-        .then(response => {
-            if (response.status !== 201) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }
-        })
-        .then(read());
-}
-
-// read
-read = () => {
-
-    fetch(URL)
-        .then(response => {
-            if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }
-            response.json().then(data => {
-                document.querySelector('#main').innerHTML =
-                    `${data._embedded.playlists.map(playlistTemplate).join('')}`
-            });
-        }
-        );
-}
-
-// update
-update = (data) => {
-    fetch(URL + id, {
-        method: 'put',
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        },
-        body: JSON.stringify(data)
-    })
-}
-
-// delete
-remove = (id) => {
-
-    const settings = {
-        method: 'delete',
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    }
-
-    fetch(URL + id, settings)
-        .then(response => {
-            if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }
-        })
-        .then(read());
+    return data;
 }
 
 window.onload = read();
+document.querySelector('#create').addEventListener("click", create);

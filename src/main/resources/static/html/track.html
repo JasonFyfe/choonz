@@ -4,39 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
-    <title>Document</title>
+    <title>Track</title>
 </head>
 <body>
+    <nav id="nav"></nav>
     <p>tracks view one</p>
-
     <div class="form">
-        <label for="ID">ID:</label>
-        <input readonly id="id" type="text" />
         <label for="name">Name:</label>
         <input id="name" type="text" />
         <label for="duration">Duration:</label>
         <input id="duration" type="text" />
         <label for="lyrics">Lyrics:</label>
         <input id="lyrics" type="text" />
-        <label for="albumid">Album ID:</label>
-        <input id="albumId" type="text" />
-        <label for="genre">Genre ID:</label>
-        <input id="genreId" type="text" />
-        <label for="playlistId">Playlist ID:</label>
-        <input id="playlistId" type="text" />
+        <label for="genre">Genre:</label>
+        <select id="genre">
+            <option value="null">No Genre</option>
+        </select>
+        <label for="playlist">Playlist:</label>
+        <select id="playlist">
+            <option value="null">No Playlist</option>
+        </select>
         <button id="update">Update</button>
-
     </div>
-
-
-
     <div id="main"></div>
-
-
-
-
-
-
 </body>
-<script src="../js/track.js" defer></script>
+<script src="../js/track.js" type="module" defer></script>
 </html>

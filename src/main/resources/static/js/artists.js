@@ -1,95 +1,32 @@
-const URL = 'http://localhost:8082/artists/'
+import * as crud from "./crud-module.js";
+import * as utils from "./utils.js";
+import {artistListItem as template} from "./template-module.js";
+import {navbar as navbar} from "./template-module.js";
 
-// template
-artistTemplate = (artist) => {
-    return `
-                <div class ="artist">
-                <h1>${artist.id}</h1>    
-                <h2>${artist.name}</h2>
-                <h3>Albums: ${artist.albums}</h3>
-                <button onclick="remove(${artist.id})">Delete</button>
-                <input type="button" onclick="location.href='artist.html?id='+${artist.id};" value="View real" />
-                </div> 
-            `
+const URL = 'http://localhost:8082/api/artists'
+
+const create = async () => {
+    let data = await getData();
+    await crud.create(URL, data);
+    location.reload();
 }
 
-// create
-create = () => {
-    let name = document.querySelector('#name').value;
+const read = async () => {
+    document.querySelector("nav").insertAdjacentHTML("afterbegin", navbar());
+    let model = await crud.readAll(URL);
+    document.querySelector('#main').innerHTML =  `${model._embedded.artists.map(template).join('')}`
+}
+
+const getData = async () => {
+    const name = document.querySelector('#name').value;
 
     const data = {
         "name": name
     }
 
-    const settings = {
-        method: 'post',
-        headers: {
-            "content-type": "application/json; charset=UTF-8"
-        },
-        body: JSON.stringify(data)
-    }
-
-    fetch(URL, settings)
-        .then(response => {
-            if (response.status !== 201) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }
-        })
-        .then(read());
-}
-
-// read
-read = () => {
-    fetch(URL)
-        .then(response => {
-            if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }
-            response.json().then(data => {
-                console.log(data)
-                document.querySelector('#main').innerHTML =
-                    `${data._embedded.artists.map(artistTemplate).join('')}`
-            });
-        }
-        )
-        .catch(function (err) {
-            console.log('Fetch Error :-S', err);
-        });
-}
-
-// update
-update = (data) => {
-    fetch(URL + id, {
-        method: 'put',
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        },
-        body: JSON.stringify(data)
-    })
-}
-
-// delete
-remove = (id) => {
-    const settings = {
-        method: 'delete',
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    }
-
-    fetch(URL + id, settings)
-        .then(response => {
-            if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }
-        })
-        .then(read());
+    return data;
 }
 
 window.onload = read();
+document.querySelector('#create').addEventListener("click", create);
+document.querySelector("#search").addEventListener("keyup", utils.search);

@@ -1,19 +1,15 @@
 package com.qa.choonz.persistence.domain;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,52 +17,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@SuppressWarnings("serial")
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class User implements UserDetails {
+public class User {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(unique = true)
-	private String username;
+    private String username;
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private String password;
+    private String password;
 
-	@Override
-	@JsonIgnore
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	@JsonIgnore
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	@JsonIgnore
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	@JsonIgnore
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	@JsonIgnore
-	public boolean isEnabled() {
-		return true;
-	}
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable( 
+            name = "users_roles", 
+            joinColumns = @JoinColumn(
+              name = "user_id", referencedColumnName = "id"), 
+            inverseJoinColumns = @JoinColumn(
+              name = "role_id", referencedColumnName = "id")) 
+    private List<Role> roles;
 }

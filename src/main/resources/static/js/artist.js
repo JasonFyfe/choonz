@@ -1,92 +1,53 @@
-const params = new URLSearchParams(window.location.search);
+import * as crud from "../js/crud-module.js";
+import * as template from "../js/template-module.js";
+import {navbar as navbar} from "./template-module.js";
 
-for(let param of params ){
-    console.log("here i am",param)
-    let id = param[1];
-    console.log(id);
-    getData(id)
+const URL = "http://localhost:8082/api/artists";
+const albumURL = "http://localhost:8082/api/albums";
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+const read = async () => {
+  document.querySelector("nav").insertAdjacentHTML("afterbegin", navbar());
+  let model = await crud.readOne(URL, id);
+  document.querySelector("#artistName").value = model.name;
+  document.querySelector("#main").innerHTML = template.artist(model);
+  document.querySelector("#delete").addEventListener("click", remove);
+  document.querySelector("#updateArtist").addEventListener("click", update);
+  document.querySelector("#createAlbum").addEventListener("click", createAlbum);
+  populateAlbums(model.albums);
 }
 
-function getData(id){
-    fetch('http://localhost:8082/artists/'+id)
-      .then(
-        function(response) {
-          if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-              response.status);
-            return;
-          }
-          response.json().then(function (data) {
-            console.log(data);
+const update = async () => {
+  let name = document.querySelector("#artistName").value;
+  let data = {
+    "name": name
+  };
+  await crud.update(URL, id, data);
+  location.reload();
+}
 
-            document.querySelector("input#id").value = data.id;
-                  
-            document.querySelector("input#name").value = data.name;
+const remove = async () => {
+  await crud.remove(URL, id);
+  window.location.replace("./artists.html");
+}
 
-            
-
-            document.getElementById("main").innerHTML =  `
-                <div class ="artistone">
-                <h1>${data.id}</h1>    
-                <h2>${data.name}</h2>
-                <button onclick="deleteByid(${data.id})">Delete</button>
-                
-                </div> 
-                
-            `     
-          });
-        }
-      )
-      .catch(function(err) {
-        console.log('Fetch Error :-S', err);
-      });
+const createAlbum = async () => {
+  let albumName = document.querySelector("#albumName").value;
+  let albumCover = document.querySelector("#albumCover").value;
+  let data = {
+    "name": albumName,
+    "cover": albumCover,
+    "artist": {
+      "id": id
     }
+  };
+  await crud.create(albumURL, data);
+  location.reload();
+}
 
-    document.getElementById("update").onclick = function() {myFunction()};
+const populateAlbums = (albums) => {
+  document.querySelector("#albums-container").innerHTML = (`${albums.map(template.artistAlbumItem).join('')}`);
+}
 
-    function myFunction() {
-        var id = document.querySelector('#id').value;
-        var nameartist = document.querySelector('#name');
-
-        let data = {
-            "name" :  nameartist.value,
-                         
-          }
-          console.log("Data to post",data)   
-          console.log(id)     
-            console.log(nameartist.value);
-            console.log("Data to post",data)
-            sendData(data, id)
-            
-  
-      }
-
-      function sendData(data, id){
-        fetch("http://localhost:8082/artists/"+ id, {
-            method: 'put',
-            headers: {
-              "Content-type": "application/json; charset=UTF-8"
-            },
-            body:JSON.stringify(data)
-          })
-          .then(function (data) {
-            console.log('Request succeeded with JSON response', data);
-          })
-          .catch(function (error) {
-            console.log('Request failed', error);
-          });
-          //location.reload()
-        }
-
-
-    function deleteByid(id){
-        fetch("http://localhost:8082/artists/"+id, {
-            method: 'delete',
-            headers: {
-              "Content-type": "application/json; charset=UTF-8"
-            },
-          })
-          
-          
-        }
-
+window.onload = read();

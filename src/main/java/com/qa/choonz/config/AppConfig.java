@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,7 +15,6 @@ import com.qa.choonz.persistence.domain.Artist;
 import com.qa.choonz.persistence.domain.Genre;
 import com.qa.choonz.persistence.domain.Playlist;
 import com.qa.choonz.persistence.domain.Track;
-import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.persistence.repository.AlbumRepository;
 import com.qa.choonz.persistence.repository.ArtistRepository;
 import com.qa.choonz.persistence.repository.GenreRepository;
@@ -40,11 +38,10 @@ public class AppConfig {
     }
     
     @Bean
-    public PasswordEncoder getPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
     
-
     @Bean
     @Profile("devst")
     CommandLineRunner initDatabase(ArtistRepository artistRepo,
@@ -56,18 +53,15 @@ public class AppConfig {
     {
     	return args ->
     	{
-    		// Users
-    		log.info("Preloading " + userRepo.save(new User(1L, "admin", "password")));
-    		log.info("Preloading " + userRepo.save(new User(2L, "user", "password")));
     		// Artists
     		log.info("Preloading " + artistRepo.save(new Artist(1L, "The Mountain Goats", null)));
     		log.info("Preloading " + artistRepo.save(new Artist(2L, "We Were Promised Jetpacks", null)));
     		// Albums
-    		log.info("Preloading " + albumRepo.save(new Album(1L, "We Shall All Be Healed", "some url", null, null)));
-    		log.info("Preloading " + albumRepo.save(new Album(2L, "Tallahassee", "some other url", null, null)));
-    		log.info("Preloading " + albumRepo.save(new Album(3L, "In League With Dragons", "some other other url", null, null)));
-    		log.info("Preloading " + albumRepo.save(new Album(4L, "The Sunset Tree", "and another", null, null)));
-    		log.info("Preloading " + albumRepo.save(new Album(5L, "These Four Walls", "and again!", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(1L, "We Shall All Be Healed", "https://via.placeholder.com/150", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(2L, "Tallahassee", "https://via.placeholder.com/151", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(3L, "In League With Dragons", "https://via.placeholder.com/152", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(4L, "The Sunset Tree", "https://via.placeholder.com/153", null, null)));
+    		log.info("Preloading " + albumRepo.save(new Album(5L, "These Four Walls", "https://via.placeholder.com/154", null, null)));
     		// Tracks id, name, playlist, genre, duration, lyrics
     		log.info("Preloading " + trackRepo.save(new Track(1L, "Cotton", null, null, null, 360, "This song is for the rats...")));
     		log.info("Preloading " + trackRepo.save(new Track(2L, "Oceanographers Choice", null, null, null, 400, "WELL...")));
@@ -78,8 +72,8 @@ public class AppConfig {
     		log.info("Preloading " + genreRepo.save(new Genre(1L, "Indie Folk", "whiny-voiced white sadboi music", null)));
     		log.info("Preloading " + genreRepo.save(new Genre(2L, "Indie Rock and Roll", "straight bangers from your youth", null)));
     		// Playlists
-    		log.info("Preloading " + playlistRepo.save(new Playlist(1L, "Sadbois", "whiny musics", "some url", null)));
-    		log.info("Preloading " + playlistRepo.save(new Playlist(2L, "Happybois", "less whiny musics", "some other url", null)));
+    		log.info("Preloading " + playlistRepo.save(new Playlist(1L, "Sadbois", "whiny musics", "https://via.placeholder.com/160", null)));
+    		log.info("Preloading " + playlistRepo.save(new Playlist(2L, "Happybois", "less whiny musics", "https://via.placeholder.com/160", null)));
     	};
     }
 

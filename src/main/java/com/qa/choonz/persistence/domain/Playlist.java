@@ -4,12 +4,12 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -42,15 +42,14 @@ public class Playlist implements Serializable {
 
     @NotNull
     @Size(max = 500)
-//    @Column(unique = true)
     private String description;
 
     @NotNull
     @Size(max = 1000)
-//    @Column(unique = true)
     private String artwork;
 
-    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL)
+    @OneToMany
+    @JoinColumn(name = "playlist_id", referencedColumnName = "id")
     private List<Track> tracks;
 
 }

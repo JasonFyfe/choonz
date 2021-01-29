@@ -33,13 +33,16 @@ public class UserControllerIntegrationTest {
 	@Autowired
 	private UserModelAssembler assembler;
 
-	private final String URI = "/api/users";
+	private final String URI = "/users";
 
-	private final User TEST_USER_1 = new User(1L, "admin", "password");
-
+	User TEST_USER_1 = new User(1l, "user1", "password", null);
+	
 	@Test
 	void createTest() throws Exception {
 		UserModel testModel = this.assembler.toModel(TEST_USER_1);
+		
+		System.out.println(testModel.toString());
+		
 		String testModelJson = this.jsonifier.writeValueAsString(testModel);
 
 		RequestBuilder request = post(URI + "/").contentType(MediaType.APPLICATION_JSON).content(testModelJson);

@@ -1,5 +1,8 @@
 package com.qa.choonz.rest.controller;
 
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qa.choonz.exception.RoleNotFoundException;
+import com.qa.choonz.persistence.domain.Role;
 import com.qa.choonz.persistence.domain.User;
+import com.qa.choonz.persistence.repository.RoleRepository;
 import com.qa.choonz.rest.model.UserModel;
 import com.qa.choonz.service.UserService;
 
@@ -22,33 +28,35 @@ import com.qa.choonz.service.UserService;
 @CrossOrigin
 public class UserController {
 
+	@Autowired
     private UserService service;
+	
+	@Autowired
+	private RoleRepository repo;
 
-    public UserController(UserService service) {
-        this.service = service;
-    }
-
-    @PostMapping("/api/users")
+    @PostMapping("/users")
     public ResponseEntity<UserModel> create(@RequestBody User user) {
+    	Role role = repo.findByName("ROLE_USER").orElseThrow(RoleNotFoundException::new);
+    	user.setRoles(Arrays.asList(role));
     	return new ResponseEntity<UserModel>(this.service.create(user), HttpStatus.CREATED);
     }
     
-    @GetMapping("/api/users")
+    @GetMapping("/users")
     public ResponseEntity<CollectionModel<UserModel>> findAll() {
         return new ResponseEntity<CollectionModel<UserModel>>(this.service.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/api/users/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<UserModel> findById(@PathVariable long id) {
         return new ResponseEntity<UserModel>(this.service.findById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/api/users/{id}")
+    @PutMapping("/users/{id}")
     public ResponseEntity<UserModel> update(@RequestBody User user, @PathVariable long id) {
         return new ResponseEntity<UserModel>(this.service.update(user, id), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/api/users/{id}")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity<UserModel> delete(@PathVariable long id) {
         return this.service.delete(id)
         		? new ResponseEntity<UserModel>(HttpStatus.NO_CONTENT)
