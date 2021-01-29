@@ -102,7 +102,7 @@ const playlist = (playlist) => {
 
 const playlistListItem = (playlist) => {
     return `
-    <div class="playlist">
+    <div class="playlist search-tag">
         <h1>${playlist.name}</h1>
         <h3>Description: ${playlist.description}</h3>
         <img src="${playlist.artwork}">
