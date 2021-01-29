@@ -47,7 +47,7 @@ const createAlbum = async () => {
 }
 
 const populateAlbums = (albums) => {
-  document.querySelector("#albums").innerHTML = (`${albums.map(template.artistAlbumItem).join('')}`);
+  document.querySelector("#albums-container").innerHTML = (`${albums.map(template.artistAlbumItem).join('')}`);
 }
 
 window.onload = read();

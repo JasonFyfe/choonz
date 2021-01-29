@@ -86,7 +86,7 @@ const createTrack = async () => {
   }
 
 const populateTracks = (tracks) => {
-    document.querySelector("#tracks").innerHTML = (`${tracks.map(template.shortTrackItem).join('')}`);
+    document.querySelector("#tracks-container").innerHTML = (`${tracks.map(template.shortTrackItem).join('')}`);
 }
 
 window.onload = read();
