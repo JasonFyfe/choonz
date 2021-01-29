@@ -9,8 +9,8 @@ const create = async () => {
 
 function getData() {
     
-    let username = document.querySelector('#username').value;
-    let password = document.querySelector('#password').value;
+    let username = document.querySelector('#usernameReg').value;
+    let password = document.querySelector('#passwordReg').value;
 
     let data = {
         "username": username,

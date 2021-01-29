@@ -48,8 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 			String URI = ((HttpServletRequest)request).getRequestURI();	
-			System.out.println(URI);
-			
 			if (SecurityContextHolder.getContext().getAuthentication() != null
 					&& SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
 					&& (URI.equals("/") || URI.equals("/index.html") || URI.equals("/login") ||  URI.equals("/register.html"))) {
@@ -76,16 +74,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 		.antMatchers("/*").permitAll()
         .antMatchers("/api/**").hasRole("USER")
-        .antMatchers("/static/**").authenticated()
         .antMatchers("/admin/**").hasRole("ADMIN")
         .anyRequest().authenticated()
         	.and()
         .csrf().disable()
         .headers().frameOptions().disable()
         	.and()
-        .formLogin().defaultSuccessUrl("/html/welcome.html")
+        .formLogin().defaultSuccessUrl("/html/welcome.html", true)
         	.and()
         .logout()
+        .logoutSuccessUrl("/")
 			.permitAll();
 		
 	}
@@ -94,6 +92,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 	    web
 	            .ignoring()
-	            .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**");
+	            .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**");
 	}
 }

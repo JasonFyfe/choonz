@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.choonz.config.SingleTenantTest;
+import com.qa.choonz.persistence.domain.Role;
 import com.qa.choonz.persistence.domain.User;
 import com.qa.choonz.rest.assembler.UserModelAssembler;
 import com.qa.choonz.rest.model.UserModel;
@@ -34,12 +37,15 @@ public class UserControllerIntegrationTest {
 	private UserModelAssembler assembler;
 
 	private final String URI = "/users";
-	
-	User TEST_USER_1 = new User(1l, "user", "password", null);
+
+	User TEST_USER_1 = new User(1l, "user1", "password", null);
 	
 	@Test
 	void createTest() throws Exception {
 		UserModel testModel = this.assembler.toModel(TEST_USER_1);
+		
+		System.out.println(testModel.toString());
+		
 		String testModelJson = this.jsonifier.writeValueAsString(testModel);
 
 		RequestBuilder request = post(URI + "/").contentType(MediaType.APPLICATION_JSON).content(testModelJson);

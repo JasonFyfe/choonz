@@ -115,25 +115,25 @@ const navbar = () => {
     <div>
         <ul>
             <li>
-                <a href="/html/welcome.html">Home</a>
+                <a id="home" href="/html/welcome.html">Home</a>
             </li>
             <li>
-                <a href="/html/tracks.html">Tracks</a>
+                <a id="tracks" href="/html/tracks.html">Tracks</a>
             </li>
             <li>
-                <a href="/html/artists.html">Artists</a>
+                <a id="artists" href="/html/artists.html">Artists</a>
             </li>
             <li>
-                <a href="/html/albums.html">Albums</a>
+                <a id="albums" href="/html/albums.html">Albums</a>
             </li>
             <li>
-                <a href="/html/playlists.html">Playlists</a>
+                <a id="playlists" href="/html/playlists.html">Playlists</a>
             </li>
             <li>
-                <a href="/html/genres.html">Genres</a>
+                <a id="genres" href="/html/genres.html">Genres</a>
             </li>
             <li>
-                <a href="/logout">Logout</a>
+                <a id="logout" href="/logout">Logout</a>
             </li>
         </ul>
     </div>`;
