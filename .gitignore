@@ -1,11 +1,11 @@
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
+Choonz_App/target/
+Choonz_App/pom.xml.tag
+Choonz_App/pom.xml.releaseBackup
+Choonz_App/pom.xml.versionsBackup
+Choonz_App/pom.xml.next
+Choonz_App/release.properties
+Choonz_App/dependency-reduced-pom.xml
+Choonz_App/buildNumber.properties
+Choonz_App/.mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
+Choonz_App/.mvn/wrapper/maven-wrapper.jar

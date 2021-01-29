@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: com.qa.choonz.controller.UserControllerIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.205 s <<< FAILURE! - in com.qa.choonz.controller.UserControllerIntegrationTest
+deleteTest  Time elapsed: 0.019 s  <<< ERROR!
+org.springframework.web.util.NestedServletException: 
+Request processing failed; nested exception is org.springframework.dao.DataIntegrityViolationException: could not execute statement; SQL [n/a]; constraint ["FKT4V0RRWEYK393BDGT107VDX0X: PUBLIC.USERS_ROLES FOREIGN KEY(ROLE_ID) REFERENCES PUBLIC.ROLE(ID) (2)"; SQL statement:
+delete from role where id=? [23503-200]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at com.qa.choonz.controller.UserControllerIntegrationTest.deleteTest(UserControllerIntegrationTest.java:74)
+Caused by: org.springframework.dao.DataIntegrityViolationException: 
+could not execute statement; SQL [n/a]; constraint ["FKT4V0RRWEYK393BDGT107VDX0X: PUBLIC.USERS_ROLES FOREIGN KEY(ROLE_ID) REFERENCES PUBLIC.ROLE(ID) (2)"; SQL statement:
+delete from role where id=? [23503-200]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at com.qa.choonz.controller.UserControllerIntegrationTest.deleteTest(UserControllerIntegrationTest.java:74)
+Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at com.qa.choonz.controller.UserControllerIntegrationTest.deleteTest(UserControllerIntegrationTest.java:74)
+Caused by: org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException: 
+Referential integrity constraint violation: "FKT4V0RRWEYK393BDGT107VDX0X: PUBLIC.USERS_ROLES FOREIGN KEY(ROLE_ID) REFERENCES PUBLIC.ROLE(ID) (2)"; SQL statement:
+delete from role where id=? [23503-200]
+	at com.qa.choonz.controller.UserControllerIntegrationTest.deleteTest(UserControllerIntegrationTest.java:74)
+

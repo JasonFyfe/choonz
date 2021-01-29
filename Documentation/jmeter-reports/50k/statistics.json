@@ -1,0 +1,34 @@
+{
+  "Total" : {
+    "transaction" : "Total",
+    "sampleCount" : 50000,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 4.25832,
+    "medianResTime" : 3.0,
+    "minResTime" : 2.0,
+    "maxResTime" : 526.0,
+    "pct1ResTime" : 4.0,
+    "pct2ResTime" : 4.0,
+    "pct3ResTime" : 5.0,
+    "throughput" : 55.563828392227286,
+    "receivedKBytesPerSec" : 86.601435658198,
+    "sentKBytesPerSec" : 10.09264851655691
+  },
+  "Read One Album" : {
+    "transaction" : "Read One Album",
+    "sampleCount" : 50000,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 4.25832,
+    "medianResTime" : 3.0,
+    "minResTime" : 2.0,
+    "maxResTime" : 526.0,
+    "pct1ResTime" : 4.0,
+    "pct2ResTime" : 4.0,
+    "pct3ResTime" : 5.0,
+    "throughput" : 55.563828392227286,
+    "receivedKBytesPerSec" : 86.601435658198,
+    "sentKBytesPerSec" : 10.09264851655691
+  }
+}
