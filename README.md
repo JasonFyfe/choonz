@@ -1,22 +1,56 @@
-# Choonz-Starter
+# Choonz Project
 
-Starter code for SDET final project specification - music website "Choonz"
+[Jira board](https://team-1603895273256.atlassian.net/jira/software/projects/CHO/boards/8/roadmap)
 
-## Concept
+A full stack web application augmented from the origin Choonz starter project. The backend was created using Spring Boot, Spring Security, Hibernate and Flyway. The fronted was built using simple HTML, CSS and vanilla Javascript.
 
-This code is designed as a starting point for the final project specification for SDET.
+## Contents
 
-This should be scaleable from 3 to 5+ entities:
+# Getting Started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-- **MUST HAVE** - Track, Artist, Album
-- **COULD HAVE** - Genre, Playlist
-- Others TBD
+See deployment for notes on how to run the compiled version on a live system.
 
-## Specifications
+### Prerequisites
+Development suite:
 
-The current idea as of 23-Sep-2020 is to release iterative specifications for this project, with varying degrees of functionality which the client/PO will want.
+- [**Eclipse**](https://www.eclipse.org/)
+- [**Spring Tools Suite**](https://spring.io/tools)
+- [**Apache Maven**](https://maven.apache.org)
+- [**JDK (v14)**](https://www.oracle.com/uk/java/technologies/javase/jdk14-archive-downloads.html)
 
-These are TBD for now, but will be included here within a `_documentation` folder in due course.
+## Development environment setup
+A step by step of how to set up a development environment.
+#### Cloning the reposity
+In your desired directory, run:
+```
+git clone https://github.com/JasonFyfe/choonz.git
+```
+### Running in Spring Tools Suite
+#### Open project
+```
+File > Open Projects from File System > Select 'Directory...' > Locate cloned directory > Choonz_App > Open
+```
+#### Running the project
+```
+Right-click project > Run as... > Spring Boot App
+```
+```
+Open Browser > Navigate to http://localhost:8082
+```
+#### Running JUnit tests
+```
+Right-click project > Run as... > JUnit Test
+```
+### Running in Eclipse IDE
+#### Open project
+```
+File > Open Projects from File System > Select 'Directory...' > Locate cloned directory > Selenium_Test_Suite
+```
+#### Running Selenium tests
+```
+Right-click project > Run as... > JUnit Test
+```
 
 ## ERD
 
@@ -41,8 +75,10 @@ TBD
 
 ### Development Team
 
-- Team names and roles here, e.g. **Scrum Master**
+- **SDET** - [**Jacob Winkworth**](https://github.com/jacobwinkworth-qa) - **Scrum Master**
+- **SDET** - [**Jason Fyfe**](https://github.com/jasonfyfe)
+- **SDET** - [**Malik Ali**](https://github.com/malikaliqa)
 
 ## Acknowledgements
 
-- Probably not needed currently, but teams may wish to credit those outside the academy/stackoverflow users/reddit posts/whatever else they've used here
+- 
