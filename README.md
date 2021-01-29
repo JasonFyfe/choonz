@@ -55,7 +55,7 @@ File > Open Projects from File System > Select 'Directory...' > Locate cloned di
 Right-click project > Run as... > JUnit Test
 ```
 ## Authors
-Jacob Winkworth, Jason Fyfe, Malik ALi
+Jacob Winkworth, Jason Fyfe, Malik Ali
 
 ### Training Team
 
