@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.qa.choonz.controller.ArtistControllerUnitTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.821 s - in com.qa.choonz.controller.ArtistControllerUnitTest
